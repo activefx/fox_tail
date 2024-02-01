@@ -7,7 +7,7 @@ class FoxTail::PopoverComponent < FoxTail::BaseComponent
 
   renders_one :header, lambda { |text_or_attributes = {}, attributes = {}, &block|
     attributes = text_or_attributes if block
-    attributes[:class] = classnames theme.classname("header.base"), attributes[:class]
+    attributes[:class] = theme_css :header, append: attributes[:class]
     content_tag :h3, attributes, &block
   }
 
@@ -41,7 +41,7 @@ class FoxTail::PopoverComponent < FoxTail::BaseComponent
 
     html_attributes[:id] = id
     html_attributes[:role] ||= :tooltip
-    html_attributes[:class] = classnames theme.apply(:root, self), theme.apply("root/hidden", self), html_class
+    html_attributes[:class] = merge_theme_css %i[root root/hidden], append: html_class
     stimulus_controller.merge! html_attributes, stimulus_controller_options if use_stimulus?
   end
 
@@ -61,8 +61,8 @@ class FoxTail::PopoverComponent < FoxTail::BaseComponent
       inline: inline?,
       delay: delay,
       trigger_type: trigger_type,
-      visible_classes: theme.apply("root/visible", self),
-      hidden_classes: theme.apply("root/hidden", self)
+      visible_classes: theme_css("root/visible"),
+      hidden_classes: theme_css("root/hidden")
     }
   end
 
@@ -71,13 +71,13 @@ class FoxTail::PopoverComponent < FoxTail::BaseComponent
   def render_popover
     content_tag :div, html_attributes do
       concat header if header?
-      concat content_tag(:div, content, class: theme.apply(:content, self))
+      concat content_tag(:div, content, class: theme_css(:content))
       concat render_arrow if arrow?
     end
   end
 
   def render_arrow
-    content_tag :div, nil, class: theme.apply(:arrow, self)
+    content_tag :div, nil, class: theme_css(:arrow)
   end
 
   class StimulusController < FoxTail::StimulusController

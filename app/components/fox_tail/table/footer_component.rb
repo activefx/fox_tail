@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-class FoxTail::Table::HeaderComponent < FoxTail::BaseComponent
+class FoxTail::Table::FooterComponent < FoxTail::BaseComponent
   renders_many :columns, lambda { |options = {}|
     options = options.merge self.options
     options[:theme] = theme
-    options[:tag] = :th
-    options[:scope] = :col
     FoxTail::Table::ColumnComponent.new options
   }
 
@@ -17,10 +15,6 @@ class FoxTail::Table::HeaderComponent < FoxTail::BaseComponent
     super
 
     html_attributes[:class] = theme_css :root, append: html_class
-  end
-
-  def render?
-    columns?
   end
 
   def call

@@ -4,8 +4,8 @@
 # @component FoxTail::InputGroupComponent
 # @component FoxTail::InputGroup::AddonComponent
 class InputGroupComponentPreview < ViewComponent::Preview
-  # @param size select {choices: [sm,base,lg]}
-  def search(size: :base)
+  # @param size select {choices: [sm,normal,lg]}
+  def search(size: :normal)
     render FoxTail::InputGroupComponent.new(size: size) do |c|
       c.with_input(type: :search, placeholder: "Search for ...") do |input|
         input.with_left_icon("magnifying-glass")
@@ -16,8 +16,8 @@ class InputGroupComponentPreview < ViewComponent::Preview
     end
   end
 
-  # @param size select {choices: [sm,base,lg]}
-  def button(size: :base)
+  # @param size select {choices: [sm,normal,lg]}
+  def button(size: :normal)
     render FoxTail::InputGroupComponent.new(size: size) do |c|
       c.with_input(type: :search, placeholder: "Search for ...") do |input|
         input.with_left_icon("magnifying-glass")
@@ -29,21 +29,21 @@ class InputGroupComponentPreview < ViewComponent::Preview
     end
   end
 
-  # @param size select {choices: [sm,base,lg]}
-  def dropdown(size: :base)
+  # @param size select {choices: [sm,normal,lg]}
+  def dropdown(size: :normal)
     render_with_template locals: { size: size }
   end
 
-  # @param size select {choices: [sm,base,lg]}
-  def label(size: :base)
+  # @param size select {choices: [sm,normal,lg]}
+  def label(size: :normal)
     render FoxTail::InputGroupComponent.new(size: size) do |c|
       c.with_input type: :url, placeholder: "mydomain", class: "text-right"
       c.with_text ".example.com"
     end
   end
 
-  # @param size select {choices: [sm,base,lg]}
-  def icon(size: :base)
+  # @param size select {choices: [sm,normal,lg]}
+  def icon(size: :normal)
     render FoxTail::InputGroupComponent.new(size: size) do |c|
       c.with_icon "envelope"
       c.with_input type: :email, placeholder: "username@domain.com"
@@ -51,9 +51,9 @@ class InputGroupComponentPreview < ViewComponent::Preview
   end
 
   # @param image
-  # @param size select {choices: [sm,base,lg]}
+  # @param size select {choices: [sm,normal,lg]}
   # @param fill toggle
-  def image(image: "users/thomas-lean.png", size: :base, fill: false)
+  def image(image: "users/thomas-lean.png", size: :normal, fill: false)
     render FoxTail::InputGroupComponent.new(size: size) do |c|
       c.with_image image, fill: fill
       c.with_input type: :email, placeholder: "username@domain.com"

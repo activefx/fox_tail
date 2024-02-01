@@ -1,5 +1,5 @@
-<%= content_tag :label, class: classnames(theme.apply(:outer_container, self), html_class) do %>
-  <%= content_tag :div, class: theme.apply(:inner_container, self) do %>
+<%= content_tag :label, class: theme_css(:outer_container, append: html_class) do %>
+  <%= content_tag :div, class: theme_css(:inner_container) do %>
     <%= icon %>
     <%= title %>
     <%= helper_text if helper_text? %>

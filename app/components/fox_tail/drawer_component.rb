@@ -13,9 +13,11 @@ class FoxTail::DrawerComponent < FoxTail::BaseComponent
           icon_or_options = "x-mark"
         end
 
-        options[:class] = classnames theme.apply("close/button", self), options[:class]
+        options[:class] = theme_css("close/button", append: options[:class])
+        options[:theme] = theme
         options[:data] ||= {}
-        icon_options[:class] = classnames theme.apply("close/icon", self), icon_options[:class]
+        icon_options[:class] = theme_css("close/icon", append: icon_options[:class])
+        icon_options[:theme] = theme
 
         if use_stimulus?
           options[:data][:action] = stimulus_merger.merge_actions options[:data][:action],
@@ -24,14 +26,14 @@ class FoxTail::DrawerComponent < FoxTail::BaseComponent
 
         content_tag :button, options do
           concat render(FoxTail::IconBaseComponent.new(icon_or_options, icon_options))
-          concat content_tag(:span, I18n.t("fox_tail.close"), class: theme.classname("accessibility.sr_only"))
+          concat content_tag(:span, I18n.t("fox_tail.close"), class: theme_css(:close))
         end
       }
     }
   }
 
   renders_one :notch, lambda { |options = {}|
-    options[:class] = classnames theme.apply(:notch, self), options[:class]
+    options[:class] = theme_css(:notch, append: options[:class])
     content_tag :span, nil, options
   }
 
@@ -47,9 +49,10 @@ class FoxTail::DrawerComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self),
-                                         open? ? visible_classes : hidden_classes,
-                                         html_class
+    html_attributes[:class] = merge_theme_css(
+      [:root, "root/#{open? ? :visible : :hidden}", !open? && swipeable_edge_class],
+      append: "#{html_class} #{swipeable_edge_class}"
+    )
 
     html_attributes[:tab_index] ||= -1
     html_attributes[:aria] ||= {}
@@ -70,36 +73,25 @@ class FoxTail::DrawerComponent < FoxTail::BaseComponent
       backdrop: backdrop?,
       body_scrolling: body_scrolling?,
       open: open?,
-      visible_classes: visible_classes,
-      hidden_classes: hidden_classes,
-      backdrop_classes: backdrop_classes,
-      body_classes: body_classes
+      visible_classes: theme_css("root/visible"),
+      hidden_classes: merge_theme_css(["root/hidden", swipeable_edge_css_path], append: swipeable_edge_class),
+      backdrop_classes: theme_css(:backdrop),
+      body_classes: theme_css(:body)
     }
   end
 
   private
 
-  def visible_classes
-    theme.apply "root/visible", self
+  def swipeable_edge_css_path
+    return if !swipeable_edge? || swipeable_edge.is_a?(String)
+
+    :swipeable_edge
   end
 
-  def hidden_classes
-    classnames theme.apply("root/hidden", self), swipeable_edge_classes
-  end
+  def swipeable_edge_class
+    return unless swipeable_edge.is_a? String
 
-  def swipeable_edge_classes
-    return unless swipeable_edge?
-    return swipeable_edge if swipeable_edge.is_a? String
-
-    theme.apply :swipeable_edge, self
-  end
-
-  def backdrop_classes
-    theme.apply :backdrop, self
-  end
-
-  def body_classes
-    theme.apply :body, self
+    swipeable_edge
   end
 
   class StimulusController < FoxTail::StimulusController

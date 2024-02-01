@@ -5,28 +5,30 @@ class FoxTail::Pagination::ActionComponent < FoxTail::ClickableComponent
     icon: {
       as: :icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply(:visual, self), options[:class]
+        options[:class] = theme_css :visual, append: options[:class]
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       }
     },
     svg: {
       as: :svg,
       renders: lambda { |path, options = {}|
-        options[:class] = classnames theme.apply(:visual, self), options[:class]
+        options[:class] = theme_css :visual, append: options[:class]
+        options[:theme] = theme
         FoxTail::InlineSvgComponent.new path, options
       }
     },
     image: {
       as: :image,
       renders: lambda { |source, options = {}|
-        options[:class] = classnames theme.apply(:visual, self), options[:class]
+        options[:class] = theme_css :visual, append: options[:class]
         image_tag source, options
       }
     },
   }
 
   has_option :action
-  has_option :size
+  has_option :size, default: :normal
   has_option :show_label, type: :boolean, default: true
 
   def left?
@@ -40,7 +42,7 @@ class FoxTail::Pagination::ActionComponent < FoxTail::ClickableComponent
   def call
     super do
       concat visual if visual? && left?
-      concat content_tag(:span, content || i18n_content, class: theme.apply(:label, self))
+      concat content_tag(:span, content || i18n_content, class: theme_css(:label))
       concat visual if visual? && right?
     end
   end

@@ -46,11 +46,8 @@ class FoxTail::FABComponent < FoxTail::BaseComponent
     super
 
     with_icon "plus" unless icon?
-
-    html_attributes[:class] = classnames theme.apply(:root, self),
-                                         placement.is_a?(String) && placement,
-                                         theme.apply("root/hidden", self),
-                                         html_class
+    html_attributes[:class] = merge_theme_css %i[root root/hidden],
+                                              append: "#{placement.is_a?(String) && placement} #{html_class}"
   end
 
   def call
@@ -64,16 +61,16 @@ class FoxTail::FABComponent < FoxTail::BaseComponent
   def stimulus_controller_options
     {
       trigger_type: trigger_type,
-      visible_classes: theme.apply("root/visible", self),
-      hidden_classes: theme.apply("root/hidden", self),
+      visible_classes: theme_css("root/visible"),
+      hidden_classes: theme_css("root/hidden")
     }
   end
 
   private
 
   def merge_fab_options(options)
-    options = options.merge variant: :solid, size: :fab, pill: rounded?
-    options[:class] = classnames theme.apply(:visual, self), options[:class]
+    options = options.merge variant: :solid, size: :fab, pill: rounded?, theme: theme
+    options[:class] = theme_css :visual, append: options[:class]
     options[:data] ||= {}
     options[:data][stimulus_controller.target_key] = :button
     options
@@ -84,7 +81,7 @@ class FoxTail::FABComponent < FoxTail::BaseComponent
                   pill: rounded?,
                   placement: placement,
                   label_placement: label_placement,
-                  theme: theme.theme(:item)
+                  theme: theme
   end
 
   def calculate_item_placement
@@ -105,7 +102,7 @@ class FoxTail::FABComponent < FoxTail::BaseComponent
 
   def render_items
     attributes = { }
-    attributes[:class] = classnames theme.apply(:menu, self)
+    attributes[:class] = theme_css :menu
     attributes[:data] = {}
     attributes[:data][stimulus_controller.target_key] = :menu if use_stimulus?
 

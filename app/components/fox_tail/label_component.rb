@@ -12,7 +12,7 @@ class FoxTail::LabelComponent < FoxTail::BaseComponent
 
     update_state_from_object!
     html_attributes[:for] ||= tag_id_for_value value
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css(:root, append: html_class)
   end
 
   def call

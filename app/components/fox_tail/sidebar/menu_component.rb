@@ -2,14 +2,18 @@
 
 class FoxTail::Sidebar::MenuComponent < FoxTail::BaseComponent
   renders_many :items, lambda { |options = {}|
-    options[:theme] = theme.theme :menu_item
+    options[:level] = level
+    options[:theme] = theme
     FoxTail::Sidebar::MenuItemComponent.new options
   }
 
-  renders_one :menu, lambda { |options = {}|
-    options[:theme] = theme.theme :menu
-    FoxTail::Sidebar::MenuItemComponent.new options
-  }
+  # renders_one :menu, lambda { |options = {}|
+  #   options[:level] = level + 1
+  #   options[:theme] = theme
+  #   FoxTail::Sidebar::MenuItemComponent.new options
+  # }
+
+  has_option :level, default: 0
 
   def render?
     items?
@@ -18,7 +22,7 @@ class FoxTail::Sidebar::MenuComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call

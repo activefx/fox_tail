@@ -2,7 +2,8 @@
 
 class FoxTail::IconButtonComponent < FoxTail::ButtonBaseComponent
   renders_many :icons, lambda { |icon, options = {}|
-    options[:class] = classnames theme.apply(:icon, self), options[:class]
+    options[:class] = theme_css :icon, append: options[:class]
+    options[:theme] = theme
     FoxTail::IconBaseComponent.new icon, options
   }
 
@@ -13,8 +14,13 @@ class FoxTail::IconButtonComponent < FoxTail::ButtonBaseComponent
     end
 
     super(html_attributes)
+    @icon_attributes = icon_or_attributes
+  end
 
-    with_icon icon_or_attributes if icon_or_attributes.present?
+  def before_render
+    super
+
+    with_icon @icon_attributes if @icon_attributes.present?
   end
 
   def call
@@ -23,7 +29,7 @@ class FoxTail::IconButtonComponent < FoxTail::ButtonBaseComponent
       concat indicator if indicator?
 
       if content? || i18n_content.present?
-        concat content_tag(:span, retrieve_content, class: theme.apply(:content, self))
+        concat content_tag(:span, retrieve_content, class: theme_css(:content))
       end
     end
   end

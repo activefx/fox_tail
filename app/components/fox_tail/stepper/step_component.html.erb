@@ -1,19 +1,19 @@
 <%= content_tag :li, html_attributes do %>
   <% if %i[default progress detailed breadcrumb timeline].include? variant %>
-    <%= content_tag :span, class: theme.apply("visual/container", self) do %>
+    <%= content_tag :span, class: theme_css("visual/container") do %>
       <% if visual? %>
         <%= visual %>
       <% else %>
-        <%= content_tag :span, index, class: theme.apply(:index, self) %>
+        <%= content_tag :span, index, class: theme_css(:index) %>
       <% end %>
     <% end %>
-    <%= content_tag :span, content, class: theme.apply(:content, self) if content? %>
+    <%= content_tag :span, content, class: theme_css(:content) if content? %>
     <% if variant == :breadcrumb %>
-      <%= render FoxTail::IconBaseComponent.new("chevron-double-right", class: theme.apply(:divider, self)) %>
+      <%= render FoxTail::IconBaseComponent.new("chevron-double-right", class: theme_css(:divider), theme: theme) %>
     <% end %>
   <% elsif variant == :vertical %>
     <span class="sr-only"><%= content %></span>
-    <%= content_tag :h3, class: theme.apply(:content, self) do %>
+    <%= content_tag :h3, class: theme_css(:content) do %>
       <%= index %>. <%= content %>
     <% end %>
     <%= visual if visual? %>

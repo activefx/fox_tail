@@ -4,11 +4,11 @@
 # @component FoxTail::FileInputComponent
 class FileInputComponentPreview < ViewComponent::Preview
 
-  # @param size select {choices: [sm,base,lg]}
+  # @param size select {choices: [sm,normal,lg]}
   # @param state select {choices: [default,valid,invalid]}
   # @param disabled toggle
   # @param multiple toggle
-  def playground(size: :base, state: :default, disabled: false, multiple: false)
+  def playground(size: :normal, state: :default, disabled: false, multiple: false)
     render FoxTail::FileInputComponent.new(size: size, state: state, disabled: disabled, multiple: multiple)
   end
 
@@ -30,9 +30,9 @@ class FileInputComponentPreview < ViewComponent::Preview
     render FoxTail::FileInputComponent.new(size: :sm)
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::FileInputComponent.new(size: :base)
+  # @label Normal (Default)
+  def normal
+    render FoxTail::FileInputComponent.new(size: :normal)
   end
 
   def large

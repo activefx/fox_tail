@@ -3,7 +3,7 @@
 class FoxTail::InputGroupComponent < FoxTail::BaseComponent
   include FoxTail::Concerns::Formable
 
-  has_option :size, default: :base
+  has_option :size, default: :normal
 
   renders_many :items, types: {
     input: {
@@ -58,27 +58,23 @@ class FoxTail::InputGroupComponent < FoxTail::BaseComponent
       as: :text,
       renders: lambda { |text, options = {}|
         addon_component options do
-          content_tag :span, text, class: theme.apply("addon/text", self)
+          content_tag :span, text, class: theme_css("addon/text")
         end
       }
     },
     icon: {
       as: :icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply("addon/visual", self),
-                                     theme.apply("addon/icon", self),
-                                     options[:class]
-
+        options[:class] = merge_theme_css(%i[addon/visual addon/icon], append: options[:class])
+        options[:theme] = theme
         addon_component { render FoxTail::IconBaseComponent.new icon, options }
       }
     },
     svg: {
       as: :svg,
       renders: lambda { |path, options = {}|
-        options[:class] = classnames theme.apply("addon/visual", self),
-                                     theme.apply("addon/svg", self),
-                                     options[:class]
-
+        options[:class] = merge_theme_css(%i[addon/visual addon/svg], append: options[:class])
+        options[:theme] = theme
         addon_component { render FoxTail::InlineSvgComponent.new(path, options) }
       }
     },
@@ -86,16 +82,17 @@ class FoxTail::InputGroupComponent < FoxTail::BaseComponent
       as: :image,
       renders: lambda { |path, options = {}|
         image_options = options.extract! :fill
-        options[:class] = classnames classnames theme.apply("addon/visual", self),
-                                                theme.apply("addon/image", self, image_options),
-                                                options[:class]
-
+        options[:class] = merge_theme_css(%i[addon/visual addon/image], append: options[:class])
+        options[:theme] = theme
         addon_component(image_options) { image_tag path, options }
       }
     },
-    wrapped: {
+    item: {
       as: :item,
-      renders: lambda { |&block| FoxTail::WrapperComponent.new(&block) }
+      renders: lambda { |options = {}, &block|
+        options[:theme] = theme
+        FoxTail::WrappedComponent.new options, &block
+      }
     }
   }
 
@@ -106,7 +103,7 @@ class FoxTail::InputGroupComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css(:root, append: html_class)
   end
 
   def call
@@ -119,7 +116,10 @@ class FoxTail::InputGroupComponent < FoxTail::BaseComponent
   private
 
   def objectify_options(options)
-    options.merge self.options.except(:class, :method_name, :value_array)
+    options = options.merge self.options.except(:class, :method_name, :value_array)
+    options[:class] = theme_css :item, append: options[:class]
+    options[:theme] = theme
+    options
   end
 
   def item_position(index)
@@ -133,15 +133,24 @@ class FoxTail::InputGroupComponent < FoxTail::BaseComponent
   end
 
   def addon_component(options = {}, &block)
-    FoxTail::WrapperComponent.new class: theme.apply(:addon, self, { fill: options[:fill] }) do |wrapper|
-      content_tag :div, wrapper.options do
-        capture wrapper, &block
+    addon_options = options.extract! :fill, :skip_classnames
+    options[:class] = theme_css(%i[addon], attributes: addon_options, append: options[:class])
+    options[:theme] = theme
+
+    FoxTail::WrappedComponent.new(options) do |wrapper|
+      content_tag :div, wrapper.html_attributes do
+        capture(wrapper, &block)
       end
     end
   end
 
   def render_item(item, index)
-    item.with_html_class theme.apply(:item, self, { position: item_position(index) })
-    item
+    return item unless item.respond_to? :with_html_class
+
+    item.with_html_class do |html_class|
+      theme_css :item, attributes: { position: item_position(index) }, prepend: html_class
+    end
+
+    item # Need to return the ViewComponent::Slot component not the actual component used
   end
 end

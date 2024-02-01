@@ -5,8 +5,8 @@
 class SpinnerComponentPreview < ViewComponent::Preview
 
   # @param color select { choices: [default,blue,red,green,yellow,indigo,purple,pink] }
-  # @param size select { choices: [xs,sm,base,lg,xl] }
-  def playground(color: :default, size: :base)
+  # @param size select { choices: [xs,sm,normal,lg,xl] }
+  def playground(color: :default, size: :normal)
     render FoxTail::SpinnerComponent.new(color: color, size: size)
   end
 
@@ -20,8 +20,8 @@ class SpinnerComponentPreview < ViewComponent::Preview
     render FoxTail::SpinnerComponent.new(size: :sm)
   end
 
-  def base
-    render FoxTail::SpinnerComponent.new(size: :base)
+  def normal
+    render FoxTail::SpinnerComponent.new(size: :normal)
   end
 
   def large

@@ -6,11 +6,11 @@ class FoxTail::IconComponent < FoxTail::IconBaseComponent
   attr_reader :color, :size
 
   has_option :color, default: :default
-  has_option :size, default: :base
+  has_option :size, default: :normal
 
   protected
 
   def html_class
-    classnames theme.apply(:root, self), super
+    theme_css :root, append: super
   end
 end

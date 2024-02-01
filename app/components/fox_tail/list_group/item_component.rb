@@ -5,21 +5,23 @@ class FoxTail::ListGroup::ItemComponent < FoxTail::ClickableComponent
     icon: {
       as: :icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply(:visual, self), options[:class]
+        options[:class] = theme_css(:visual, append: options[:class])
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       }
     },
     svg: {
       as: :svg,
       renders: lambda { |path, options = {}|
-        options[:class] = classnames theme.apply(:visual, self), options[:class]
+        options[:class] = theme_css(:visual, append: options[:class])
+        options[:theme] = theme
         FoxTail::InlineSvgComponent.new path, options
       }
     },
     image: {
       as: :image,
       renders: lambda { |source, options = {}|
-        options[:class] = classnames theme.apply(:visual, self), options[:class]
+        options[:class] = theme_css(:visual, append: options[:class])
         image_tag source, options
       }
     }
@@ -27,7 +29,8 @@ class FoxTail::ListGroup::ItemComponent < FoxTail::ClickableComponent
 
   renders_one :badge, lambda { |options = {}|
     options.reverse_merge! pill: true
-    options[:class] = classnames theme.apply(:badge, self), options[:class]
+    options[:class] = theme_css(:badge, append: options[:class])
+    options[:theme] = theme
     FoxTail::BadgeComponent.new options
   }
 

@@ -3,7 +3,7 @@
 class FoxTail::Table::RowComponent < FoxTail::BaseComponent
   renders_many :columns, lambda { |options = {}|
     options = options.merge self.options
-    options[:theme] = theme.theme :column
+    options[:theme] = theme
     options[:scope] ||= :row if options[:tag] == :th
     FoxTail::Table::ColumnComponent.new options
   }
@@ -15,7 +15,7 @@ class FoxTail::Table::RowComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call

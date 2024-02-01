@@ -5,9 +5,9 @@
 class DotIndicatorComponentPreview < ViewComponent::Preview
 
   # @param color "The theme color of the dot"
-  # @param size select {choices: [xs,sm,base,lg,xl]}
+  # @param size select {choices: [xs,sm,normal,lg,xl]}
   # @param animated toggle "Add a pulsing animation."
-  def playground(color: :default, animated: false, size: :base)
+  def playground(color: :default, animated: false, size: :normal)
     render(FoxTail::DotIndicatorComponent.new(color: color, animated: animated, size: size))
   end
 
@@ -147,9 +147,9 @@ class DotIndicatorComponentPreview < ViewComponent::Preview
     render(FoxTail::DotIndicatorComponent.new(size: :sm))
   end
 
-  # @label Base (Default)
-  def base
-    render(FoxTail::DotIndicatorComponent.new(size: :base))
+  # @label Normal (Default)
+  def normal
+    render(FoxTail::DotIndicatorComponent.new(size: :normal))
   end
 
   def large

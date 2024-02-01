@@ -6,13 +6,13 @@ class BadgeComponentPreview < ViewComponent::Preview
   ICON = "check-circle"
 
   # @param text "The contents of the badge"
-  # @param size select { choices: [base,sm] } "The size of the badge"
+  # @param size select { choices: [normal,sm] } "The size of the badge"
   # @param color "The theme color of the badge"
   # @param icon "The Heroicon to add to the badge"
   # @param pill toggle "Display the badge as a pill"
   # @param border toggle "Add a border to the badge"
   # @param url "Convert the badge to a link"
-  def playground(size: :base, color: :default, icon: nil, pill: false, border: false, url: nil, text: "Badge")
+  def playground(size: :normal, color: :default, icon: nil, pill: false, border: false, url: nil, text: "Badge")
     render(FoxTail::BadgeComponent.new(size: size, color: color, pill: pill, border: border, url: url)) do |c|
       c.with_icon icon if icon.present?
       text

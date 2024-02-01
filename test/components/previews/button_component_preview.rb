@@ -249,9 +249,9 @@ class ButtonComponentPreview < ViewComponent::Preview
     render(FoxTail::ButtonComponent.new(size: :sm).with_content("Button"))
   end
 
-  # @label Base (Default)
-  def base
-    render(FoxTail::ButtonComponent.new(size: :base).with_content("Button"))
+  # @label Normal (Default)
+  def normal
+    render(FoxTail::ButtonComponent.new(size: :normal).with_content("Button"))
   end
 
   # @label Large
@@ -300,14 +300,14 @@ class ButtonComponentPreview < ViewComponent::Preview
 
   # @label Basic
   def controlled
-    render(FoxTail::ButtonComponent.new(controlled: true, onclick: "this.setAttribute('data-fox_tail--clickable-state-value', 'disable')")) do |c|
+    render(FoxTail::ButtonComponent.new(controlled: true, onclick: "this.setAttribute('data-fox-tail--clickable-state-value', 'disable')")) do |c|
       c.with_right_icon "arrow-right"
       "Upload"
     end
   end
 
   def loadable
-    render(FoxTail::ButtonComponent.new(controlled: true, loadable: true, onclick: "this.setAttribute('data-fox_tail--clickable-state-value', 'loading')")) do |c|
+    render(FoxTail::ButtonComponent.new(controlled: true, loadable: true, onclick: "this.setAttribute('data-fox-tail--clickable-state-value', 'loading')")) do |c|
       c.with_loading_label.with_content "Uploading..."
       c.with_left_icon "photo"
       c.with_right_icon "arrow-up-tray"

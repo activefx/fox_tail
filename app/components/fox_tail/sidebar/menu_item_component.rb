@@ -5,27 +5,24 @@ class FoxTail::Sidebar::MenuItemComponent < FoxTail::ClickableComponent
     icon: {
       as: :left_icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :left, type: :svg }),
-                                     options[:class]
-
+        options[:class] = theme_css :visual, attributes: { position: :left, type: :icon }, append: options[:class]
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       }
     },
     svg: {
       as: :left_svg,
       renders: lambda { |path, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :left, type: :svg }),
-                                     options[:class]
-
+        options[:class] = theme_css :visual, attributes: { position: :left, type: :svg }, append: options[:class]
+        options[:theme] = theme
         FoxTail::InlineSvgComponent.new path, options
       }
     },
     image: {
       as: :left_image,
       renders: lambda { |source, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :left, type: :image }),
-                                     options[:class]
-
+        options[:class] = theme_css :visual, attributes: { position: :left, type: :image }, append: options[:class]
+        options[:theme] = theme
         image_tag source, options
       }
     }
@@ -35,49 +32,48 @@ class FoxTail::Sidebar::MenuItemComponent < FoxTail::ClickableComponent
     icon: {
       as: :right_icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :right, type: :icon }),
-                                     options[:class]
-
+        options[:class] = theme_css :visual, attributes: { position: :right, type: :icon }, append: options[:class]
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       }
     },
     svg: {
       as: :right_svg,
       renders: lambda { |path, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :right, type: :svg }),
-                                     options[:class]
-
+        options[:class] = theme_css :visual, attributes: { position: :right, type: :svg }, append: options[:class]
+        options[:theme] = theme
         FoxTail::InlineSvgComponent.new path, options
       }
     },
     image: {
       as: :right_image,
       renders: lambda { |source, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :right, type: :image }),
-                                     options[:class]
+        options[:class] = theme_css :visual, attributes: { position: :right, type: :image }, append: options[:class]
+        options[:theme] = theme
         image_tag source, options
       }
     },
     badge: {
       as: :badge,
       renders: lambda { |options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :right, type: :badge }),
-                                     options[:class]
-
+        options[:class] = theme_css :visual, attributes: { position: :left, type: :badge }, append: options[:class]
+        options[:theme] = theme
         FoxTail::BadgeComponent.new options
       }
     }
   }
 
   renders_one :menu, lambda { |options = {}|
-    options[:theme] = theme.theme :menu
+    options[:theme] = theme
     options[:id] = menu_id
+    options[:level] = level + 1
     FoxTail::Sidebar::MenuComponent.new options
   }
 
   has_option :id
   has_option :menu_id
   has_option :selected, type: :boolean, default: false
+  has_option :level, default: 0
 
   def initialize(html_attributes = {})
     super(html_attributes)
@@ -112,7 +108,9 @@ class FoxTail::Sidebar::MenuItemComponent < FoxTail::ClickableComponent
   private
 
   def render_collapsible_trigger
-    render FoxTail::CollapsibleTriggerComponent.new id, "##{menu_id}", open: selected?, theme: theme do |trigger|
+    component = FoxTail::CollapsibleTriggerComponent.new(id, "##{menu_id}", open: selected?, theme: theme)
+
+    render component do |trigger|
       render_item trigger.html_attributes
     end
   end
@@ -122,7 +120,7 @@ class FoxTail::Sidebar::MenuItemComponent < FoxTail::ClickableComponent
 
     content_tag root_tag_name, attributes do
       concat left_visual if left_visual?
-      concat content_tag(:span, content, class: theme.apply(:content, self))
+      concat content_tag(:span, content, class: theme_css(:content))
       concat right_visual if right_visual?
     end
   end

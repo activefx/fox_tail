@@ -65,7 +65,7 @@ class FoxTail::ButtonComponent < FoxTail::ButtonBaseComponent
             content_tag(
               :span,
               loading_label,
-              class: !loading? && theme.classname("hidden"),
+              class: !loading? && "hidden",
               data: { stimulus_controller.target_key => "loading" }
             )
           )
@@ -73,7 +73,7 @@ class FoxTail::ButtonComponent < FoxTail::ButtonBaseComponent
             content_tag(
               :span,
               content,
-              class: loading? && theme.classname("hidden"),
+              class: loading? && "hidden",
               data: { stimulus_controller.target_key => "active" }
             )
           )
@@ -91,17 +91,17 @@ class FoxTail::ButtonComponent < FoxTail::ButtonBaseComponent
   protected
 
   def root_classes
-    super { loading? && theme.apply("root/disabled", self) }
+    super do |namespaces|
+      namespaces << "root/disabled" if loading?
+    end
   end
 
-  def loader_classes(additional_classes = nil)
-    classnames theme.apply(:visual, self, { position: :left, loader: true }),
-               controlled? && !loading? && theme.classname("hidden"),
-               additional_classes
+  def loader_classes(additional_classes)
+    theme_css :visual, attributes: { position: :left, loader: true }, append: additional_classes
   end
 
   def visual_classes(side, addition_classes = nil)
-    classnames theme.apply(:visual, self, { position: side }), addition_classes
+    theme_css :visual, attributes: { position: side }, append: addition_classes
   end
 
   private
@@ -111,6 +111,7 @@ class FoxTail::ButtonComponent < FoxTail::ButtonBaseComponent
     options[:"aria-hidden"] = true
     options[:class] = visual_classes side, options[:class]
     options[stimulus_controller.target_key(raw: true)] = "active" if controlled?
+    options[:theme] = theme
     FoxTail::IconBaseComponent.new icon, options
   end
 
@@ -118,6 +119,7 @@ class FoxTail::ButtonComponent < FoxTail::ButtonBaseComponent
     options[:"aria-hidden"] = true
     options[:class] = visual_classes side, options[:class]
     options[stimulus_controller.target_key(raw: true)] = "active" if controlled?
+    options[:theme] = theme
     FoxTail::InlineSvgComponent.new path, options
   end
 
@@ -127,7 +129,7 @@ class FoxTail::ButtonComponent < FoxTail::ButtonBaseComponent
     options[:class] = visual_classes side, options[:class]
     options[:data] ||= {}
     options[:data][stimulus_controller.target_key] = "active" if controlled?
-
+    options[:theme] = theme
     image_tag path, options
   end
 end

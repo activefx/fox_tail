@@ -7,15 +7,13 @@ class FoxTail::DropdownTriggerComponent < FoxTail::TriggerBaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self),
-                                         theme.apply("root/#{open? ? :open : :close}", self),
-                                         html_class
+    html_attributes[:class] = merge_theme_css %W[root root/#{open? ? :open : :close}], append: html_class
   end
 
   def stimulus_controller_options
     super.merge delay: delay,
-                open_classes: theme.apply("root/open", self),
-                closed_classes: theme.apply("root/closed", self)
+                open_classes: theme_css("root/open"),
+                closed_classes: theme_css("root/closed")
   end
 
   class StimulusController < FoxTail::StimulusController

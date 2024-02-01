@@ -11,7 +11,7 @@ class FoxTail::InputErrorListComponent < FoxTail::BaseComponent
       text_or_attributes = capture(self, &block)
     end
 
-    attributes[:class] = classnames theme.apply(:message, self), attributes[:class]
+    attributes[:class] = theme_css(:message, append: attributes[:class])
     content_tag :li, text_or_attributes, attributes
   }
 
@@ -22,7 +22,7 @@ class FoxTail::InputErrorListComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css(:root, append: html_class)
     error_messages.each { |msg| with_message msg } unless messages?
   end
 

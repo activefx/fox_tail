@@ -3,7 +3,7 @@
 class FoxTail::ToastComponent < FoxTail::DismissibleComponent
 
   renders_one :header, lambda { |text, options = {}|
-    options[:class] = classnames theme.apply(:header, self), options[:class]
+    options[:class] = theme_css :header, append: options[:class]
     content_tag :span, text, options
   }
 
@@ -27,30 +27,29 @@ class FoxTail::ToastComponent < FoxTail::DismissibleComponent
     image: {
       as: :image,
       renders: lambda { |source, options = {}|
-        options[:class] = classnames theme.apply("visual", self),
-                                     theme.apply("visual/image", self),
-                                     options[:class]
-
+        options[:class] = merge_theme_css %i[visual visual/image], append: options[:class]
         image_tag source, options
       }
     }
   }
 
   renders_one :action, lambda { |options = {}|
-    options[:class] = classnames theme.apply(:action, self), options[:class]
+    options[:class] = theme_css :action, append: options[:class]
+    options[:theme] = theme
     FoxTail::ClickableComponent.new options
   }
 
   renders_one :dismiss_icon, lambda { |options = {}, &block|
     content = block ? capture(&block) : I18n.t("components.fox_tail.close")
     icon_options = options.slice(:icon, :variant).reverse_merge(icon: "x-mark", variant: :solid)
-    icon_options[:class] = theme.apply "dismiss/icon", self
+    icon_options[:class] = theme_css "dismiss/icon"
+    icon_options[:theme] = theme
     dismiss_actions! options
-    options[:class] = classnames theme.apply("dismiss/button", self), options[:class]
+    options[:class] = theme_css "dismiss/button", append: options[:class]
 
     content_tag :button, options do
       concat render(FoxTail::IconBaseComponent.new(icon_options[:icon], icon_options.except(:icon)))
-      concat content_tag(:div, content, class: theme.classname("accessibility.sr_only"))
+      concat content_tag(:div, content, class: theme.css!("accessibility.sr_only"))
     end
   }
 
@@ -62,8 +61,7 @@ class FoxTail::ToastComponent < FoxTail::DismissibleComponent
     super
 
     with_dismiss_icon if dismissible? && !dismiss_icon
-
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
     html_attributes[:role] = :alert
   end
 
@@ -85,16 +83,14 @@ class FoxTail::ToastComponent < FoxTail::DismissibleComponent
     visual_options = options.extract!(:fill, :color).reverse_merge(color: :default, fill: false)
     visual_options[:fill] = !!visual_options[:fill]
 
-    container_classes = classnames theme.apply("container/visual", self, visual_options)
+    container_classes = theme_css "container/visual", attributes: visual_options
 
     options[:"aria-hidden"] = true
-    options[:class] = classnames theme.apply(:visual, self, visual_options),
-                                 theme.apply("visual/icon", self, visual_options),
-                                 options[:class]
+    options[:class] = merge_theme_css %i[visual visual/icon], attributes: visual_options, append: options[:class]
 
     content_tag :div, class: container_classes do
-      concat block.call(options)
-      concat content_tag(:span, content, class: theme.classname("accessibility.sr_only"))
+      concat capture(options, &block)
+      concat content_tag(:span, content, class: theme.css!("accessibility.sr_only"))
     end
   end
 end

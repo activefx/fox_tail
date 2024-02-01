@@ -5,7 +5,7 @@ class FoxTail::ProgressBarComponent < FoxTail::BaseComponent
 
   attr_reader :value
 
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :color, default: :default
   has_option :show_label, type: :boolean, default: false
   has_option :controlled, type: :boolean, default: false
@@ -18,7 +18,7 @@ class FoxTail::ProgressBarComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css(:root, append: html_class)
     html_attributes[:aria] ||= {}
     html_attributes[:aria][:valuenow] = value
     html_attributes[:aria][:valuemin] = 0
@@ -49,7 +49,7 @@ class FoxTail::ProgressBarComponent < FoxTail::BaseComponent
   end
 
   def bar_attributes
-    attributes = { class: theme.apply(:bar, self), style: "width: #{value}%" }
+    attributes = { class: theme_css(:bar), style: "width: #{value}%" }
     return attributes unless use_stimulus?
 
     attributes[:data] = {}

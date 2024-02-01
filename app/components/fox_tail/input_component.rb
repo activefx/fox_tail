@@ -42,7 +42,7 @@ class FoxTail::InputComponent < FoxTail::InputBaseComponent
     super
 
     html_attributes[:type] ||= :text
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css(:root, append: html_class)
     html_attributes[:value] ||= value_before_type_cast
 
     if html_attributes[:type] == :number
@@ -54,7 +54,7 @@ class FoxTail::InputComponent < FoxTail::InputBaseComponent
 
   def call
     if visual?
-      content_tag :div, class: theme.apply(:container, self) do
+      content_tag :div, class: theme_css(:container) do
         concat render_visual :left, left_visual if left_visual?
         concat input_content
         concat render_visual :right, right_visual if right_visual?
@@ -89,17 +89,19 @@ class FoxTail::InputComponent < FoxTail::InputBaseComponent
   end
 
   def visual_classes(position, classes)
-    classnames theme.apply(:visual, self, { position: position }), classes
+    theme_css :visual, attributes: { position: position }, append: classes
   end
 
   def render_icon(position, icon, attributes)
     attributes[:class] = visual_classes position, attributes[:class]
     attributes[:variant] ||= :mini
+    attributes[:theme] = theme
     FoxTail::IconBaseComponent.new icon, attributes
   end
 
   def render_svg(position, path, attributes)
     attributes[:class] = visual_classes position, attributes[:class]
+    attributes[:theme] = theme
     FoxTail::InlineSvgComponent.new path, attributes
   end
 
@@ -109,6 +111,6 @@ class FoxTail::InputComponent < FoxTail::InputBaseComponent
   end
 
   def render_visual(position, visual)
-    content_tag :div, visual, class: theme.apply(:"visual/container", self, { position: position })
+    content_tag :div, visual, class: theme_css("visual/container", attributes: { position: position })
   end
 end

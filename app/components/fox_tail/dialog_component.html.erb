@@ -4,7 +4,7 @@
     <%= body %>
     <%= content if content? %>
   <% elsif content? %>
-    <%= content_tag :div, content, class: theme.apply(:body, self) %>
+    <%= content_tag :div, content, class: theme_css(:body) %>
   <% end %>
   <%= footer if footer? %>
 <% end %>

@@ -1,4 +1,5 @@
 require "active_support/dependencies/autoload"
+require "tailwind_theme-rails"
 
 require "fox_tail/version"
 require "fox_tail/errors"
@@ -7,10 +8,8 @@ require "fox_tail/engine"
 module FoxTail
   extend ActiveSupport::Autoload
 
-  autoload :ClassnameMerger
   autoload :Config
   autoload :Base
-  autoload :Theme
   autoload :Translator
   autoload :StimulusController
 

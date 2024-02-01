@@ -50,19 +50,21 @@ class FoxTail::Dropdown::MenuItemComponent < FoxTail::ClickableComponent
   def render_icon(icon, options, side)
     options[:variant] ||= :mini
     options[:"aria-hidden"] = true
-    options[:class] = classnames theme.apply(:visual, self, side: side), options[:class]
+    options[:class] = theme_css :visual, attributes: { side: side }, append: options[:class]
+    options[:theme] = theme
     FoxTail::IconBaseComponent.new icon, options
   end
 
   def render_svg(path, options, side)
     options[:"aria-hidden"] = true
-    options[:class] = classnames theme.apply(:visual, self, side: side), options[:class]
+    options[:class] = theme_css :visual, attributes: { side: side }, append: options[:class]
+    options[:theme] = theme
     FoxTail::InlineSvgComponent.new path, options
   end
 
   def render_image(uri, options, side)
     options[:"aria-hidden"] = true
-    options[:class] = classnames theme.apply(:visual, self, side: side), options[:class]
+    options[:class] = theme_css :visual, attributes: { side: side }, append: options[:class]
     image_tag uri, options
   end
 end

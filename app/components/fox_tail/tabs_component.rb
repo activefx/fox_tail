@@ -8,12 +8,13 @@ class FoxTail::TabsComponent < FoxTail::BaseComponent
     options[:tabs_id] = tag_id
     options[:variant] = variant
     options[:controlled] = controlled?
-    options[:theme] = theme.theme :tab
+    options[:theme] = theme
     FoxTail::Tabs::TabComponent.new options
   }
 
   renders_many :panels, lambda { |id, options = {}|
     options[:role] = :tabpanel
+    options[:theme] = theme
     FoxTail::Tabs::PanelComponent.new id, options
   }
 
@@ -35,7 +36,7 @@ class FoxTail::TabsComponent < FoxTail::BaseComponent
     super
 
     html_attributes[:role] = :tablist
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call

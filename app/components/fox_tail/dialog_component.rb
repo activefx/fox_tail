@@ -2,17 +2,17 @@
 
 class FoxTail::DialogComponent < FoxTail::SurfaceComponent
   renders_one :header, lambda { |options = {}, &block|
-    options[:class] = classnames theme.apply(:header, self), options[:class]
+    options[:class] = theme_css :header, append: options[:class]
     content_tag :div, options, &block
   }
 
   renders_one :body, lambda { |options = {}, &block|
-    options[:class] = classnames theme.apply(:body, self), options[:class]
+    options[:class] = theme_css :body, append: options[:class]
     content_tag :div, options, &block
   }
 
   renders_one :footer, lambda { |options = {}, &block|
-    options[:class] = classnames theme.apply(:footer, self), options[:class]
+    options[:class] = theme_css :footer, append: options[:class]
     content_tag :div, options, &block
   }
 

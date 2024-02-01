@@ -8,16 +8,17 @@ class FoxTail::DropdownComponent < FoxTail::BaseComponent
   renders_one :trigger, lambda { |options = {}, &block|
     options[:trigger_type] = trigger_type
     options[:delay] = delay
+    options[:theme] = theme
     FoxTail::DropdownTriggerComponent.new trigger_id, "##{id}", options, &block
   }
 
   renders_one :header, lambda { |options = {}, &block|
-    attributes = options.merge class: classnames(theme.apply(:header, self), options[:class])
+    attributes = options.merge class: theme_css(:header, append: options[:class])
     content_tag :div, attributes, &block
   }
 
   renders_many :menus, lambda { |options = {}|
-    options[:theme] = theme.theme :menu
+    options[:theme] = theme
     FoxTail::Dropdown::MenuComponent.new options
   }
 
@@ -43,9 +44,7 @@ class FoxTail::DropdownComponent < FoxTail::BaseComponent
     super
 
     html_attributes[:id] = id
-    html_attributes[:class] = classnames theme.apply(:root, self),
-                                         theme.apply("root/hidden", self),
-                                         html_class
+    html_attributes[:class] = merge_theme_css %i[root root/hidden], append: html_class
   end
 
   def call
@@ -62,8 +61,8 @@ class FoxTail::DropdownComponent < FoxTail::BaseComponent
       offset: offset,
       shift: shift,
       ignore_click_outside: ignore_click_outside,
-      hidden_classes: theme.apply("root/hidden", self),
-      visible_classes: theme.apply("root/visible", self),
+      hidden_classes: theme_css("root/hidden"),
+      visible_classes: theme_css("root/visible"),
       trigger_type: trigger_type,
       delay: delay
     }

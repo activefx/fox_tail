@@ -1,5 +1,0 @@
-root:
-  base: group
-  collapsed: collapsed
-root/collapsed:
-  base: collapsed

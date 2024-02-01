@@ -9,7 +9,8 @@ class FoxTail::ButtonBaseComponent < FoxTail::ClickableComponent
       renders: lambda { |options = {}|
         styling_options = options.extract!(:position).reverse_merge(position: :top_right)
         options[:size] ||= :sm
-        options[:class] = classnames theme.apply(:indicator, self, styling_options), options[:class]
+        options[:class] = theme_css(:indicator, attributes: styling_options, append: options[:class])
+        options[:theme] = theme
         FoxTail::DotIndicatorComponent.new options
       }
     },
@@ -19,14 +20,15 @@ class FoxTail::ButtonBaseComponent < FoxTail::ClickableComponent
         styling_options = options.extract!(:position).reverse_merge(position: :top_right)
         options[:size] ||= :sm
         options[:pill] = true unless options.key?(:pill)
-        options[:class] = classnames theme.apply(:indicator, self, styling_options), options[:class]
+        options[:class] = theme_css(:indicator, attributes: styling_options, append: options[:class])
+        options[:theme] = theme
         FoxTail::BadgeComponent.new options
       }
     }
   }
 
   has_option :variant, default: :solid
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :color, default: :default
   has_option :pill, default: false, type: :boolean
   has_option :formmethod, as: :form_method

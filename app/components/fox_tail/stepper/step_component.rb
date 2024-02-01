@@ -8,20 +8,24 @@ class FoxTail::Stepper::StepComponent < FoxTail::BaseComponent
     icon: {
       as: :icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply(:icon, self), options[:class]
+        options[:class] = merge_theme_css %i[visual visual/icon], append: options[:class]
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       }
     },
     svg: {
       as: :svg,
       renders: lambda { |path, options = {}|
-
+        options[:class] = merge_theme_css %i[visual visual/svg], append: options[:class]
+        options[:theme] = theme
+        FoxTail::InlineSvgComponent.new path, options
       }
     },
     image: {
       as: :image,
       renders: lambda { |source, options = {}|
-
+        options[:class] = merge_theme_css %i[visual visual/image], append: options[:class]
+        image_tag source, options
       }
     }
   }
@@ -34,7 +38,7 @@ class FoxTail::Stepper::StepComponent < FoxTail::BaseComponent
     super
 
     initialize_visual
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   private

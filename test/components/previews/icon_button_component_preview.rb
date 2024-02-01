@@ -7,10 +7,10 @@ class IconButtonComponentPreview < ViewComponent::Preview
   # @param icon "The Heroicon to use"
   # @param color "The theme color to use"
   # @param variant select { choices: [solid,outline] } "The button style"
-  # @param size select { choices: [xs,sm,base,lg,xl] } "The size of the button"
+  # @param size select { choices: [xs,sm,normal,lg,xl] } "The size of the button"
   # @param pill toggle "Display the button as a circle"
   # @param content "The hidden text for screen readers"
-  def playground(icon: "arrow-right", color: :default, variant: :solid, size: :base, pill: false, content: nil)
+  def playground(icon: "arrow-right", color: :default, variant: :solid, size: :normal, pill: false, content: nil)
     render(FoxTail::IconButtonComponent.new(icon, color: color, variant: variant, size: size, pill: pill)) do
       content
     end
@@ -28,9 +28,9 @@ class IconButtonComponentPreview < ViewComponent::Preview
     render(FoxTail::IconButtonComponent.new("arrow-right", size: :sm))
   end
 
-  # @label Base (Default)
-  def base
-    render(FoxTail::IconButtonComponent.new("arrow-right", size: :base))
+  # @label Normal (Default)
+  def normal
+    render(FoxTail::IconButtonComponent.new("arrow-right", size: :normal))
   end
 
   # @label Large

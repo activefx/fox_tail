@@ -48,21 +48,21 @@ class FoxTail::ClickableComponent < FoxTail::BaseComponent
   protected
 
   def root_classes
-    classnames theme.apply(:root, self),
-               theme.apply("root/#{disabled? ? :disabled : :active}", self),
-               block_given? && yield,
-               html_class
+    paths = %W[root root/#{disabled? ? :disabled : :active}]
+    yield paths if block_given?
+    merge_theme_css paths, append: html_class
   end
 
   def active_classes
-    classnames theme.apply(:root, self),
-               theme.apply("root/active", self),
-               block_given? && yield,
-               html_class
+    paths = %w[root root/active]
+    yield paths if block_given?
+    merge_theme_css paths, append: html_class
   end
 
   def disabled_classes
-    classnames theme.apply("root/disabled", self), block_given? && yield
+    paths = %w[root/disabled]
+    yield paths if block_given?
+    merge_theme_css paths
   end
 
   private

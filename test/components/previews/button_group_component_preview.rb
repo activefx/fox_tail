@@ -4,7 +4,7 @@
 # @logical_path components
 class ButtonGroupComponentPreview < ViewComponent::Preview
 
-  # @param size select { choices: [xs,sm,base,lg,xl] } "The button group size"
+  # @param size select { choices: [xs,sm,normal,lg,xl] } "The button group size"
   # @param pill toggle "Display the group as a pill"
   # @param button_one_text
   # @param button_one_color "The them color for button one"
@@ -16,7 +16,7 @@ class ButtonGroupComponentPreview < ViewComponent::Preview
   # @param button_three_color "The them color for button one"
   # @param button_three_variant select { choices: [solid,outline] }
   def playground(
-    size: :base,
+    size: :normal,
     pill: false,
     button_one_text: "One",
     button_one_color: :default,
@@ -55,9 +55,9 @@ class ButtonGroupComponentPreview < ViewComponent::Preview
     end
   end
 
-  # @label Base (Default)
-  def base
-    render(FoxTail::ButtonGroupComponent.new(size: :base)) do |c|
+  # @label Normal (Default)
+  def normal
+    render(FoxTail::ButtonGroupComponent.new(size: :normal)) do |c|
       c.with_button.with_content("One")
       c.with_button.with_content("Two")
       c.with_button.with_content("Three")

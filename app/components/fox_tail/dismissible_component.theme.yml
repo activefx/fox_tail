@@ -1,4 +1,0 @@
-root/dismissing:
-  base: transition-opacity duration-300 ease-out opacity-0
-root/dismissed:
-  base: hidden

@@ -4,13 +4,14 @@ class FoxTail::ModalComponent < FoxTail::BaseComponent
   include FoxTail::Concerns::HasStimulusController
 
   renders_one :trigger, lambda { |options = {}|
+    options[:theme] = theme
     self.class.trigger_component.new options.delete(:id), "##{tag_id}", options
   }
 
   has_option :placement, default: :center
   has_option :backdrop, type: :boolean, default: true
   has_option :static, type: :boolean, default: false
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :closeable, type: :boolean, default: true
   has_option :open, type: :boolean, default: false
 
@@ -33,7 +34,7 @@ class FoxTail::ModalComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = root_classes
+    html_attributes[:class] = merge_theme_css(%i[root root/hidden], append: html_class)
     html_attributes[:tabindex] = -1
     html_attributes[:aria] ||= {}
     html_attributes[:aria][:hidden] = true
@@ -51,8 +52,8 @@ class FoxTail::ModalComponent < FoxTail::BaseComponent
       static: static?,
       closeable: closeable?,
       open: open?,
-      visible_classes: visible_classes,
-      hidden_classes: hidden_classes
+      visible_classes: theme_css("root/visible"),
+      hidden_classes: theme_css("root/hidden")
     }
   end
 
@@ -66,7 +67,7 @@ class FoxTail::ModalComponent < FoxTail::BaseComponent
     options[:variant] = :modal
     options[:color] = :modal
     options[:size] = :modal
-    options[:theme] = theme.theme :close_icon_button
+    options[:theme] = theme
 
     component = FoxTail::IconButtonComponent.new options
     component.with_icon icon_or_options if icon_or_options.present?
@@ -78,30 +79,16 @@ class FoxTail::ModalComponent < FoxTail::BaseComponent
     FoxTail::ButtonComponent.new options
   end
 
-  protected
-
-  def root_classes
-    classnames theme.apply(:root, self), hidden_classes, html_class
-  end
-
-  def visible_classes
-    theme.apply "root/visible", self
-  end
-
-  def hidden_classes
-    theme.apply "root/hidden", self
-  end
-
   private
 
   def content_attributes
-    attributes = { class: theme.apply(:content, self) }
+    attributes = { class: theme_css(:content) }
     attributes[:data] = { stimulus_controller.target_key => :content } if use_stimulus?
     attributes
   end
 
   def render_backdrop
-    content_tag :div, nil, class: theme.apply(:backdrop, self)
+    content_tag :div, nil, class: theme_css(:backdrop)
   end
 
   def render_modal

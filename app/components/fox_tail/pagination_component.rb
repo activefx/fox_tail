@@ -7,7 +7,7 @@ class FoxTail::PaginationComponent < FoxTail::BaseComponent
     options[:action] = :first
     options[:size] = size
     options[:disabled] = first_page?
-    options[:theme] = theme.theme :action
+    options[:theme] = theme
     options[:url] = page_url first_page
     FoxTail::Pagination::ActionComponent.new options
   }
@@ -16,7 +16,7 @@ class FoxTail::PaginationComponent < FoxTail::BaseComponent
     options[:action] = :previous
     options[:size] = size
     options[:disabled] = !previous_page?
-    options[:theme] = theme.theme :action
+    options[:theme] = theme
     options[:url] = page_url previous_page
     FoxTail::Pagination::ActionComponent.new options
   }
@@ -25,7 +25,7 @@ class FoxTail::PaginationComponent < FoxTail::BaseComponent
     options[:action] = :next
     options[:size] = size
     options[:disabled] = !next_page?
-    options[:theme] = theme.theme :action
+    options[:theme] = theme
     options[:url] = page_url next_page
     FoxTail::Pagination::ActionComponent.new options
   }
@@ -34,7 +34,7 @@ class FoxTail::PaginationComponent < FoxTail::BaseComponent
     options[:action] = :last
     options[:size] = size
     options[:disabled] = last_page?
-    options[:theme] = theme.theme :action
+    options[:theme] = theme
     options[:url] = page_url last_page
     FoxTail::Pagination::ActionComponent.new options
   }
@@ -42,7 +42,7 @@ class FoxTail::PaginationComponent < FoxTail::BaseComponent
   has_option :first_page, default: 1
   has_option :page_key, default: :page
   has_option :url
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :padding, default: 3
   has_option :variant, default: :text
 
@@ -124,7 +124,7 @@ class FoxTail::PaginationComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
     with_previous_button unless previous_button?
     with_next_button unless next_button?
   end

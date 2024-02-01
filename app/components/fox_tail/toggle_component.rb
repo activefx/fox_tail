@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class FoxTail::ToggleComponent < FoxTail::BaseComponent
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :color, default: :default
 
-  renders_one :label, lambda { |text| content_tag :span, text, class: theme.apply(:label, self) }
+  renders_one :label, lambda { |text, options = {}|
+    options[:class] = theme_css :label, append: options[:class]
+    content_tag :span, text, options
+  }
 
   def before_render
     super
@@ -23,14 +26,14 @@ class FoxTail::ToggleComponent < FoxTail::BaseComponent
   private
 
   def container_attributes
-    { class: classnames(theme.apply(:container, self), html_class) }
+    { class: theme_css(:container, append: html_class) }
   end
 
   def input_attributes
-    html_attributes.merge type: :checkbox, class: theme.apply(:root, self)
+    html_attributes.merge type: :checkbox, class: theme_css(:root)
   end
 
   def toggle_attributes
-    { class: theme.apply(:toggle, self) }
+    { class: theme_css(:toggle) }
   end
 end

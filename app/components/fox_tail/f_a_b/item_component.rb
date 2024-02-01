@@ -20,10 +20,16 @@ class FoxTail::FAB::ItemComponent < FoxTail::IconButtonComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
 
     if label_style == :tooltip && self.class.use_stimulus?
-      trigger_component = FoxTail::TooltipTriggerComponent.new tag_id, "##{tooltip_id}", trigger_type: :hover
+      trigger_component = FoxTail::TooltipTriggerComponent.new(
+        tag_id,
+        "##{tooltip_id}",
+        trigger_type: :hover,
+        theme: theme
+      )
+
       options = trigger_component.stimulus_controller_options
       attributes = FoxTail::TooltipTriggerComponent.stimulus_controller.attributes options
       stimulus_merger.merge_attributes! html_attributes, attributes
@@ -39,7 +45,7 @@ class FoxTail::FAB::ItemComponent < FoxTail::IconButtonComponent
   end
 
   def size
-    :fab
+    :fab_item
   end
 
   alias_method :render_button, :call
@@ -55,6 +61,7 @@ class FoxTail::FAB::ItemComponent < FoxTail::IconButtonComponent
   private
 
   def render_tooltip
-    render FoxTail::TooltipComponent.new(tooltip_id, placement: label_placement, trigger_id: tag_id).with_content(content)
+    component = FoxTail::TooltipComponent.new(tooltip_id, placement: label_placement, trigger_id: tag_id, theme: theme)
+    render component.with_content(content)
   end
 end

@@ -9,9 +9,9 @@ class IconComponentPreview < ViewComponent::Preview
   #
   # @param icon "The Heroicon name"
   # @param variant select { choices: [solid,outline,mini] } "The type of icon"
-  # @param size select { choices: [xs,sm,base,lg,xl] } "The size of the icon"
+  # @param size select { choices: [xs,sm,normal,lg,xl] } "The size of the icon"
   # @param color "The theme color of the icon"
-  def playground(icon: "shield-check", variant: :solid, size: :base, color: :default)
+  def playground(icon: "shield-check", variant: :solid, size: :normal, color: :default)
     render(FoxTail::IconComponent.new(icon, variant: variant, size: size, color: color))
   end
 
@@ -121,9 +121,9 @@ class IconComponentPreview < ViewComponent::Preview
     render(FoxTail::IconComponent.new("shield-check", size: :sm))
   end
 
-  # @label Base (Default)
-  def base
-    render(FoxTail::IconComponent.new("shield-check", size: :base))
+  # @label Normal (Default)
+  def normal
+    render(FoxTail::IconComponent.new("shield-check", size: :normal))
   end
 
   # @label Large

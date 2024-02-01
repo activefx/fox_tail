@@ -3,7 +3,7 @@
 class FoxTail::TimelineComponent < FoxTail::BaseComponent
   renders_many :entries, lambda { |options = {}|
     options[:vertical] = vertical?
-    options[:theme] = theme.theme :entry
+    options[:theme] = theme
     FoxTail::Timeline::EntryComponent.new options
   }
 
@@ -16,7 +16,7 @@ class FoxTail::TimelineComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call

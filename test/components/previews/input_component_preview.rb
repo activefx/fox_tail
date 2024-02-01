@@ -4,13 +4,13 @@
 # @component FoxTail::InputComponent
 class InputComponentPreview < ViewComponent::Preview
 
-  # @param size select {choices: [sm,base,lg]}
+  # @param size select {choices: [sm,normal,lg]}
   # @param state select {choices: [default,valid,invalid]}
   # @param readonly toggle
   # @param disabled toggle
   # @param left_icon
   # @param right_icon
-  def playground(readonly: false, disabled: false, size: :base, state: :default, left_icon: nil, right_icon: nil)
+  def playground(readonly: false, disabled: false, size: :normal, state: :default, left_icon: nil, right_icon: nil)
     render FoxTail::InputComponent.new(
       size: size,
       state: state,
@@ -82,9 +82,9 @@ class InputComponentPreview < ViewComponent::Preview
     render FoxTail::InputComponent.new(size: :sm, placeholder: "Placeholder")
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::InputComponent.new(size: :base, placeholder: "Placeholder")
+  # @label Normal (Default)
+  def normal
+    render FoxTail::InputComponent.new(size: :normal, placeholder: "Placeholder")
   end
 
   def large

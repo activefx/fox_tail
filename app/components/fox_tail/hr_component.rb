@@ -2,7 +2,7 @@
 
 class FoxTail::HrComponent < FoxTail::BaseComponent
 
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :shape, default: :none
   has_option :trimmed, default: false, type: :boolean
 
@@ -11,28 +11,14 @@ class FoxTail::HrComponent < FoxTail::BaseComponent
   end
 
   def call
-    content_tag :div, class: wrapper_classes do
+    content_tag :div, class: theme_css(:wrapper, append: html_class) do
       if content? && shape == :none
-        concat tag(:hr, class: hr_classes)
-        concat content_tag(:div, content, class: content_classes)
-        concat tag(:hr, class: hr_classes)
+        concat tag(:hr, class: theme_css(:root))
+        concat content_tag(:div, content, class: theme_css(:content))
+        concat tag(:hr, class: theme_css(:root))
       else
-        tag :hr, class: hr_classes
+        tag :hr, class: theme_css(:root, append: html_class)
       end
     end
-  end
-
-  private
-
-  def wrapper_classes
-    classnames theme.apply(:wrapper, self), html_class
-  end
-
-  def hr_classes
-    theme.apply :root, self
-  end
-
-  def content_classes
-    theme.apply :content, self
   end
 end

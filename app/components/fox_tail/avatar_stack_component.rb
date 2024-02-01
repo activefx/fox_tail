@@ -5,10 +5,8 @@ class FoxTail::AvatarStackComponent < FoxTail::BaseComponent
     options[:size] = size
     options[:rounded] = rounded
     options[:border] = true unless options.key? :border
-    options[:class] = classnames theme.apply(:content, self),
-                                 theme.apply(:avatar, self),
-                                 options[:class]
-
+    options[:class] = merge_theme_css %i[content avatar], append: options[:class]
+    options[:theme] = theme
     FoxTail::AvatarComponent.new options
   }
 
@@ -19,12 +17,11 @@ class FoxTail::AvatarStackComponent < FoxTail::BaseComponent
     options[:size] = size
     options[:rounded] = rounded
     options[:border] = true unless options.key? :border
-    options[:class] = classnames theme.apply(:content, self),
-                                 theme.apply(:counter, self),
-                                 options[:class]
+    options[:class] = merge_theme_css %i[content counter], append: options[:css]
+    options[:theme] = theme
 
     if url.present?
-      link_to url, class: theme.apply("counter/link", self) do
+      link_to url, class: theme_css("counter/link") do
         render FoxTail::AvatarComponent.new(options)
       end
     else
@@ -32,7 +29,7 @@ class FoxTail::AvatarStackComponent < FoxTail::BaseComponent
     end
   }
 
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :rounded, default: true, type: :boolean
 
   def render?
@@ -42,7 +39,7 @@ class FoxTail::AvatarStackComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call

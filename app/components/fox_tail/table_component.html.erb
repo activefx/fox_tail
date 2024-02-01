@@ -1,10 +1,10 @@
 <%= content_tag :table, html_attributes do %>
   <%= caption if caption? %>
-  <%= content_tag :thead, header, class: theme.apply(:thead, self) if header? %>
-  <%= content_tag :tbody, class: theme.apply(:tbody, self) do %>
+  <%= content_tag :thead, header, class: theme_css(:thead) if header? %>
+  <%= content_tag :tbody, class: theme_css(:tbody) do %>
     <% rows.each do |row| %>
       <%= row %>
     <% end %>
   <% end %>
-  <%= content_tag :tfoot, footer, class: theme.apply(:tfoot, self) if footer? %>
+  <%= content_tag :tfoot, footer, class: theme_css(:tfoot) if footer? %>
 <% end %>

@@ -5,8 +5,8 @@
 class RangeComponentPreview < ViewComponent::Preview
 
   # @param disabled toggle
-  # @param size select { choices: [sm,base,lg] }
-  def playground(disabled: false, size: :base)
+  # @param size select { choices: [sm,normal,lg] }
+  def playground(disabled: false, size: :normal)
     render FoxTail::RangeComponent.new(disabled: disabled, size: size)
   end
 
@@ -28,9 +28,9 @@ class RangeComponentPreview < ViewComponent::Preview
     render FoxTail::RangeComponent.new(size: :sm)
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::RangeComponent.new(size: :base)
+  # @label Normal (Default)
+  def normal
+    render FoxTail::RangeComponent.new(size: :normal)
   end
 
   def large

@@ -1,19 +1,19 @@
-<%= content_tag :div, html_attributes.merge(id: id, class: root_classes, role: :alert) do %>
-  <%= content_tag :div, class: theme.classname("wrapper.base") do %>
+<%= content_tag :div, html_attributes.merge(id: id, role: :alert) do %>
+  <%= content_tag :div, class: theme_css(:wrapper) do %>
     <% if icon? %>
       <%= icon %>
       <%= content_tag :div,
                       t(severity, scope: "fox_tail.alert.severity", default: severity.to_s.humanize),
-                      class: theme.classname("accessibility.sr_only") %>
+                      class: theme.css!("accessibility.sr_only") %>
     <% end %>
     <%= header? ? header : content_tag(:div, content) %>
     <%= dismiss_icon if dismiss_icon? %>
   <% end %>
   <% if header? && content? %>
-    <%= content_tag :div, content, class: theme.classname("content.base") %>
+    <%= content_tag :div, content, class: theme_css(:content) %>
   <% end %>
   <% if buttons? %>
-    <%= content_tag :div, class: theme.classname("buttons.container") do %>
+    <%= content_tag :div, class: theme_css(:footer) do %>
       <% buttons.each do |btn| %>
         <%= btn %>
       <% end %>

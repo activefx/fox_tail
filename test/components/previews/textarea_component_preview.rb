@@ -4,12 +4,12 @@
 # @component FoxTail::TextareaComponent
 class TextareaComponentPreview < ViewComponent::Preview
 
-  # @param size select {choices: [sm,base,lg]}
+  # @param size select {choices: [sm,normal,lg]}
   # @param state select {choices: [default,valid,invalid]}
   # @param readonly toggle
   # @param disabled toggle
   # @param autoresize toggle
-  def playground(size: :base, state: :default, readonly: false, disabled: false, autoresize: false)
+  def playground(size: :normal, state: :default, readonly: false, disabled: false, autoresize: false)
     render FoxTail::TextareaComponent.new(
       size: size,
       state: state,
@@ -51,9 +51,9 @@ class TextareaComponentPreview < ViewComponent::Preview
     render FoxTail::TextareaComponent.new(size: :sm, placeholder: "Some content...")
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::TextareaComponent.new(size: :base, placeholder: "Some content...")
+  # @label Normal (Default)
+  def normal
+    render FoxTail::TextareaComponent.new(size: :normal, placeholder: "Some content...")
   end
 
   def large

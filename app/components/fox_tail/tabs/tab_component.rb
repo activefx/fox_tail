@@ -10,21 +10,23 @@ class FoxTail::Tabs::TabComponent < FoxTail::ClickableComponent
     icon: {
       as: :left_icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :left }), options[:class]
+        options[:class] = theme_css(:visual, attributes: { position: :left }, append: options[:class])
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       }
     },
     svg: {
       as: :left_svg,
       renders: lambda { |path, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :left }), options[:class]
+        options[:class] = theme_css(:visual, attributes: { position: :left }, append: options[:class])
+        options[:theme] = theme
         FoxTail::InlineSvgComponent.new path, options
       }
     },
     image: {
       as: :left_image,
       renders: lambda { |source, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :left }), options[:class]
+        options[:class] = theme_css(:visual, attributes: { position: :left }, append: options[:class])
         image_tag source, options
       }
     }
@@ -34,21 +36,23 @@ class FoxTail::Tabs::TabComponent < FoxTail::ClickableComponent
     icon: {
       as: :right_icon,
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :right }), options[:class]
+        options[:class] = theme_css(:visual, attributes: { position: :right }, append: options[:class])
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       }
     },
     svg: {
       as: :right_svg,
       renders: lambda { |path, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :right }), options[:class]
+        options[:class] = theme_css(:visual, attributes: { position: :right }, append: options[:class])
+        options[:theme] = theme
         FoxTail::InlineSvgComponent.new path, options
       }
     },
     image: {
       as: :right_image,
       renders: lambda { |source, options = {}|
-        options[:class] = classnames theme.apply(:visual, self, { position: :right }), options[:class]
+        options[:class] = theme_css(:visual, attributes: { position: :right }, append: options[:class])
         image_tag source, options
       }
     }
@@ -84,7 +88,7 @@ class FoxTail::Tabs::TabComponent < FoxTail::ClickableComponent
       selected: selected?,
       active_classes: active_classes,
       selected_classes: selected_classes,
-      siblings: tabs_id? ? "##{tabs_id} [data-controller~='fox_tail--tab']" : nil,
+      siblings: tabs_id? ? "##{tabs_id} [data-controller~='fox-tail--tab']" : nil,
       panel: panel_id? ? "##{panel_id}" : nil,
     }
   end
@@ -92,13 +96,13 @@ class FoxTail::Tabs::TabComponent < FoxTail::ClickableComponent
   protected
 
   def root_classes
-    super do
-      selected_classes if selected?
+    super do |paths|
+      paths << "root/selected" if selected?
     end
   end
 
   def selected_classes
-    theme.apply("root/selected", self)
+    theme_css "root/selected"
   end
 
   class << self

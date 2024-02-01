@@ -3,7 +3,7 @@
 class FoxTail::DotIndicatorComponent < FoxTail::BaseComponent
   has_option :color, default: :default
   has_option :animated, default: false, type: :boolean
-  has_option :size, default: :base
+  has_option :size, default: :normal
 
   def call
     animated? ? render_animated_dot : render_dot
@@ -12,21 +12,14 @@ class FoxTail::DotIndicatorComponent < FoxTail::BaseComponent
   private
 
   def render_dot
-    classes = classnames theme.apply(:root, self), theme.apply(:dot, self), html_class
-    content_tag :span, nil, html_attributes.merge(class: classes)
+    attributes = html_attributes.merge(class: merge_theme_css(%i[root dot], append: html_class))
+    content_tag :span, nil, attributes
   end
 
   def render_animated_dot
-    container_classes = classnames theme.apply(:root, self),
-                                   theme.apply(:container, self),
-                                   html_class
-
-    dot_classes = classnames theme.apply(:root, self), theme.apply(:dot, self)
-    animated_classes = classnames dot_classes, theme.apply("dot/animation", self)
-
-    content_tag :span, html_attributes.merge(class: container_classes) do
-      concat content_tag(:span, nil, class: animated_classes)
-      concat content_tag(:span, nil, class: dot_classes)
+    content_tag :span, html_attributes.merge(class: merge_theme_css(%i[root container], append: html_class)) do
+      concat content_tag(:span, nil, class: merge_theme_css([:root, :dot, "dot/animation"]))
+      concat content_tag(:span, nil, class: merge_theme_css(%i[root dot]))
     end
   end
 end

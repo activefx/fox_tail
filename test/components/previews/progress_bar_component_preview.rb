@@ -6,11 +6,11 @@ class ProgressBarComponentPreview < ViewComponent::Preview
 
   # @param progress range { min: 0, max: 100, step: 1 }
   # @param color select { choices: [default,blue,red,yellow,green,indigo,purple,pink] }
-  # @param size select { choices: [xs,sm,base,lg,xl] }
+  # @param size select { choices: [xs,sm,normal,lg,xl] }
   # @param show_label toggle
   # @param label
   # @param controlled toggle
-  def playground(progress: 45, color: :default, size: :base, show_label: false, label: nil, controlled: false)
+  def playground(progress: 45, color: :default, size: :normal, show_label: false, label: nil, controlled: false)
     component = FoxTail::ProgressBarComponent.new progress.to_i,
                                                    color: color,
                                                    size: size,
@@ -32,9 +32,9 @@ class ProgressBarComponentPreview < ViewComponent::Preview
     render FoxTail::ProgressBarComponent.new(45, size: :sm)
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::ProgressBarComponent.new(45, size: :base)
+  # @label Normal (Default)
+  def normal
+    render FoxTail::ProgressBarComponent.new(45, size: :normal)
   end
 
   def large

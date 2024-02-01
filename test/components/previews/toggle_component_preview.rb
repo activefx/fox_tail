@@ -5,10 +5,10 @@
 class ToggleComponentPreview < ViewComponent::Preview
 
   # @param color select { choices: [default,blue,red,green,yellow,indigo,purple,pink] }
-  # @param size select { choices: [sm,base,lg] }
+  # @param size select { choices: [sm,normal,lg] }
   # @param disabled toggle
   # @param checked toggle
-  def playground(color: :default, size: :base, disabled: false, checked: true)
+  def playground(color: :default, size: :normal, disabled: false, checked: true)
     render FoxTail::ToggleComponent.new(color: color, size: size, disabled: disabled, checked: checked)
   end
 
@@ -18,9 +18,9 @@ class ToggleComponentPreview < ViewComponent::Preview
     render FoxTail::ToggleComponent.new(size: :sm)
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::ToggleComponent.new(size: :base)
+  # @label Normal (Default)
+  def normal
+    render FoxTail::ToggleComponent.new(size: :normal)
   end
 
   def large

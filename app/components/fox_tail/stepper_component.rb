@@ -3,7 +3,7 @@
 class FoxTail::StepperComponent < FoxTail::BaseComponent
   renders_many :steps, lambda { |options = {}|
     options[:variant] = variant
-    options[:theme] = theme.theme :step
+    options[:theme] = theme
     options[:index] ||= @index += 1
     FoxTail::Stepper::StepComponent.new options
   }
@@ -23,7 +23,7 @@ class FoxTail::StepperComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call

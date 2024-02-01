@@ -8,26 +8,26 @@ class FoxTail::TableComponent < FoxTail::BaseComponent
     end
 
     content_or_options = capture(self, &block) if block
-    options[:class] = classnames theme.apply(:caption, self), options[:class]
+    options[:class] = theme_css :caption, append: options[:class]
     content_tag :caption, content_or_options, options
   }
 
   renders_one :header, lambda { |options = {}|
     options = options.merge section_options
-    options[:theme] = theme.theme :header
+    options[:theme] = theme
     FoxTail::Table::HeaderComponent.new options
   }
 
   renders_many :rows, lambda { |options = {}|
     options = options.merge section_options
-    options[:theme] = theme.theme :row
+    options[:theme] = theme
     FoxTail::Table::RowComponent.new options
   }
 
   renders_one :footer, lambda { |options = {}|
     options = options.merge section_options
-    options[:theme] = theme.theme :footer
-    FoxTail::Table::RowComponent.new options
+    options[:theme] = theme
+    FoxTail::Table::FooterComponent.new options
   }
 
   has_option :highlight, default: :none
@@ -37,7 +37,7 @@ class FoxTail::TableComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   private

@@ -7,14 +7,14 @@ class AvatarComponentPreview < ViewComponent::Preview
   # @param image "The image asset path or URI to display for the avatar."
   # @param icon "The heroicon to use for the avatar when image is empty"
   # @param text "The placeholder text to use when image & icon are empty"
-  # @param size select { choices: [xs,sm,base,lg,xl] } "The size of the avatar."
+  # @param size select { choices: [xs,sm,normal,lg,xl] } "The size of the avatar."
   # @param rounded toggle "A circular avatar."
   # @param border toggle "Add a border around the avatar"
   # @param indicator toggle "Show indicator"
   # @param indicator_position select { choices: [top_left,top_center,top_right,center_left,center,center_right,bottom_left,bottom_center,bottom_right] } "The position of the indicator"
   # @param indicator_color "The theme color of the Dot Indicator"
   # @param indicator_animated toggle "Animate the indicator with a pulse"
-  def playground(image: "users/michael-gough.png", icon: "user", text: "TT", size: :base, rounded: false, border: false, indicator: false, indicator_position: :top_right, indicator_color: :green, indicator_animated: false)
+  def playground(image: "users/michael-gough.png", icon: "user", text: "TT", size: :normal, rounded: false, border: false, indicator: false, indicator_position: :top_right, indicator_color: :green, indicator_animated: false)
     render(FoxTail::AvatarComponent.new(src: image, icon: icon, text: text, size: size, rounded: rounded, border: border)) do |c|
       c.with_dot position: indicator_position, color: indicator_color, animated: indicator_animated if indicator.present?
     end
@@ -32,9 +32,9 @@ class AvatarComponentPreview < ViewComponent::Preview
     render(FoxTail::AvatarComponent.new(src: "users/michael-gough.png", size: :sm))
   end
 
-  # @label Base (Default)
-  def base
-    render(FoxTail::AvatarComponent.new(src: "users/michael-gough.png", size: :base))
+  # @label Normal (Default)
+  def normal
+    render(FoxTail::AvatarComponent.new(src: "users/michael-gough.png", size: :normal))
   end
 
   # @label Large

@@ -32,7 +32,7 @@ class FoxTail::ButtonGroupComponent < FoxTail::BaseComponent
     }
   }
 
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :pill, default: false, type: :boolean
 
   def render?
@@ -42,7 +42,7 @@ class FoxTail::ButtonGroupComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call
@@ -55,7 +55,7 @@ class FoxTail::ButtonGroupComponent < FoxTail::BaseComponent
 
   def button_component_options(options)
     options = objectify_component_options options
-    options[:class] = classnames theme.apply(:button, self), options[:class]
+    options[:class] = theme_css :button, append: options[:class]
     options
   end
 

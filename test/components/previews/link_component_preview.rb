@@ -84,6 +84,12 @@ class LinkComponentPreview < ViewComponent::Preview
   # @!endgroup
 
   def controlled
-    render(FoxTail::LinkComponent.new("#", controlled: true, onclick: "this.setAttribute('data-fox_tail--clickable-state-value', 'disable')").with_content("Link"))
+    component = FoxTail::LinkComponent.new(
+      "#",
+      controlled: true,
+      onclick: "this.setAttribute('data-fox-tail--clickable-state-value', 'disable')"
+    )
+
+    render(component.with_content("Link"))
   end
 end

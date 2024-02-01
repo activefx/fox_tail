@@ -5,11 +5,11 @@
 # @component FoxTail::Select::OptionComponent
 # @component FoxTail::Select::GroupOptionComponent
 class SelectComponentPreview < ViewComponent::Preview
-  # @param size select {choices: [sm,base,lg]}
+  # @param size select {choices: [sm,normal,lg]}
   # @param state select {choices: [default,valid,invalid]}
   # @param multiple toggle
   # @param disabled toggle
-  def playground(size: :base, state: :default, multiple: false, disabled: false)
+  def playground(size: :normal, state: :default, multiple: false, disabled: false)
     render FoxTail::SelectComponent.new(size: size, state: state, disabled: disabled, multiple: multiple) do |c|
       c.with_select_option "No Country", value: ""
       c.with_select_group "North America" do |g|
@@ -75,9 +75,9 @@ class SelectComponentPreview < ViewComponent::Preview
     end
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::SelectComponent.new(size: :base) do |c|
+  # @label Normal (Default)
+  def normal
+    render FoxTail::SelectComponent.new(size: :normal) do |c|
       c.with_select_option "No Country", value: ""
       c.with_select_group "North America" do |g|
         g.with_group_option "United States", value: "US", selected: true

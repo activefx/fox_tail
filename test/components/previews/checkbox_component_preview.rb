@@ -4,11 +4,11 @@
 # @component FoxTail::CheckboxComponent
 class CheckboxComponentPreview < ViewComponent::Preview
 
-  # @param size select {choices: [sm,base,lg]}
+  # @param size select {choices: [sm,normal,lg]}
   # @param color select {choices: [default,blue,red,green,yellow,indigo,purple,pink]}
   # @param checked toggle
   # @param disabled toggle
-  def playground(size: :base, color: :default, checked: true, disabled: false)
+  def playground(size: :normal, color: :default, checked: true, disabled: false)
     render FoxTail::CheckboxComponent.new(size: size, color: color, checked: checked, disabled: disabled)
   end
 
@@ -42,9 +42,9 @@ class CheckboxComponentPreview < ViewComponent::Preview
     render FoxTail::CheckboxComponent.new(size: :sm)
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::CheckboxComponent.new(size: :base)
+  # @label Normal (Default)
+  def normal
+    render FoxTail::CheckboxComponent.new(size: :normal)
   end
 
   def large

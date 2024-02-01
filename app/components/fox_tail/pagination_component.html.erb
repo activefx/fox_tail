@@ -2,18 +2,22 @@
   <%= first_button if first_button %>
   <%= previous_button %>
   <% if left_page_gap? %>
-    <%= content_tag :span, class: theme.apply(:ellipse, self) do %>
-      <%= render FoxTail::IconBaseComponent.new("ellipsis-horizontal", class: theme.apply("ellipse/icon", self)) %>
+    <%= content_tag :span, class: merge_theme_css(%i[item_base ellipse]) do %>
+      <%= render FoxTail::IconBaseComponent.new("ellipsis-horizontal", class: theme_css("ellipse/icon")) %>
     <% end %>
   <% end %>
   <% display_range.each do |page| %>
-    <%= render FoxTail::Pagination::PageComponent.new url: page_url(page), current_page: page == current_page, theme: theme.theme(:page) do %>
+    <%= render FoxTail::Pagination::PageComponent.new(
+      url: page_url(page),
+      current_page: page == current_page,
+      theme: theme
+    ) do %>
       <%= page %>
     <% end %>
   <% end %>
   <% if right_page_gap? %>
-    <%= content_tag :span, class: theme.apply(:ellipse, self) do %>
-      <%= render FoxTail::IconBaseComponent.new("ellipsis-horizontal", class: theme.apply("ellipse/icon", self)) %>
+    <%= content_tag :span, class: merge_theme_css(%i[item_base ellipse]) do %>
+      <%= render FoxTail::IconBaseComponent.new("ellipsis-horizontal", class: theme_css("ellipse/icon")) %>
     <% end %>
   <% end %>
   <%= next_button %>

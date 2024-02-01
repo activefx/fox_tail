@@ -52,7 +52,7 @@ class ModalComponentPreview < ViewComponent::Preview
     render_with_template template: "modal_component_preview/size_small"
   end
 
-  def base
+  def normal
     render_with_template template: "modal_component_preview/size_base"
   end
 

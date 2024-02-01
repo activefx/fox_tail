@@ -6,9 +6,9 @@ class HrComponentPreview < ViewComponent::Preview
 
   # @param trimmed toggle "Shorten the horizontal line"
   # @param shape select { choices: [none,circle,square] } "Display a shape and not a line"
-  # @param size select { choices: [xs,sm,base,lg,xl] } "Size of the shape or line if not a shape"
+  # @param size select { choices: [xs,sm,normal,lg,xl] } "Size of the shape or line if not a shape"
   # @param content "Display with text"
-  def playground(trimmed: false, shape: :none, size: :base, content: nil)
+  def playground(trimmed: false, shape: :none, size: :normal, content: nil)
     render(FoxTail::HrComponent.new(trimmed: trimmed, size: size, shape: shape)) do |c|
       content if content.present?
     end

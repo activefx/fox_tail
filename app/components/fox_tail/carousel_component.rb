@@ -4,9 +4,8 @@ class FoxTail::CarouselComponent < FoxTail::BaseComponent
   include FoxTail::Concerns::HasStimulusController
 
   renders_many :slides, lambda { |options = {}, &block|
-    options[:class] = classnames theme.apply(:slide, self),
-                                 hidden_slide_classes,
-                                 options[:class]
+    options[:class] = merge_theme_css %i[slide slide/hidden], append: options[:class]
+    options[:theme] = theme
 
     if use_stimulus?
       options[:data] ||= {}
@@ -30,46 +29,20 @@ class FoxTail::CarouselComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def stimulus_controller_options
     {
       position: position,
       interval: interval,
-      previous_slide_classes: previous_slide_classes,
-      current_slide_classes: current_slide_classes,
-      next_slide_classes: next_slide_classes,
-      hidden_slide_classes: hidden_slide_classes,
-      active_indicator_classes: active_indicator_classes,
-      inactive_indicator_classes: inactive_indicator_classes
+      previous_slide_classes: theme_css("slide/previous"),
+      current_slide_classes: theme_css("slide/current"),
+      next_slide_classes: theme_css("slide/next"),
+      hidden_slide_classes: theme_css("slide/hidden"),
+      active_indicator_classes: theme_css("indicator/active"),
+      inactive_indicator_classes: theme_css("indicator/inactive")
     }
-  end
-
-  private
-
-  def previous_slide_classes
-    theme.apply "slide/previous", self
-  end
-
-  def current_slide_classes
-    theme.apply "slide/current", self
-  end
-
-  def next_slide_classes
-    theme.apply "slide/next", self
-  end
-
-  def hidden_slide_classes
-    theme.apply "slide/hidden", self
-  end
-
-  def active_indicator_classes
-    theme.apply "indicator/active", self
-  end
-
-  def inactive_indicator_classes
-    theme.apply "indicator/inactive", self
   end
 
   class StimulusController < FoxTail::StimulusController

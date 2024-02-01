@@ -2,7 +2,7 @@
 
 class FoxTail::CheckboxComponent < FoxTail::BaseComponent
   has_option :color, default: :default
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :unchecked_value, default: "0"
   has_option :checked_value, default: "1"
   has_option :include_hidden, type: :boolean, default: true
@@ -11,7 +11,7 @@ class FoxTail::CheckboxComponent < FoxTail::BaseComponent
     super
 
     html_attributes[:type] = :checkbox
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
     html_attributes[:value] = checked_value
   end
 

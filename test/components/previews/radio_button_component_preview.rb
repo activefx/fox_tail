@@ -6,9 +6,9 @@ class RadioButtonComponentPreview < ViewComponent::Preview
 
   # @param checked toggle
   # @param disabled toggle
-  # @param size select { choices: [sm,base,lg] }
+  # @param size select { choices: [sm,normal,lg] }
   # @param color select { choices: [default,blue,red,green,yellow,indigo,purple,pink] }
-  def playground(checked: true, disabled: false, color: :default, size: :base)
+  def playground(checked: true, disabled: false, color: :default, size: :normal)
     render FoxTail::RadioButtonComponent.new(
       checked: checked,
       disabled: disabled,
@@ -48,9 +48,9 @@ class RadioButtonComponentPreview < ViewComponent::Preview
     render FoxTail::RadioButtonComponent.new(size: :sm, name: :test)
   end
 
-  # @label Base (Default)
-  def base
-    render FoxTail::RadioButtonComponent.new(size: :base, name: :test)
+  # @label Normal (Default)
+  def normal
+    render FoxTail::RadioButtonComponent.new(size: :normal, name: :test)
   end
 
   def large

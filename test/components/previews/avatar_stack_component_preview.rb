@@ -29,9 +29,9 @@ class AvatarStackComponentPreview < ViewComponent::Preview
     end
   end
 
-  # @label Base (Default)
-  def base
-    render(FoxTail::AvatarStackComponent.new(size: :base)) do |c|
+  # @label Normal (Default)
+  def normal
+    render(FoxTail::AvatarStackComponent.new(size: :normal)) do |c|
       c.with_avatar src: "users/bonnie-green.png"
       c.with_avatar src: "users/jese-leos.png"
       c.with_avatar icon: :user

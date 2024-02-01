@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "railties", ">= 4.1.0"
-  spec.add_dependency "tailwind_merge", "~> 0.7"
+  spec.add_dependency "tailwind_merge", "~> 0.10"
+  spec.add_dependency "tailwind_theme-rails", "~> 0.1"
   spec.add_runtime_dependency "view_component", "~> 3.0"
 end

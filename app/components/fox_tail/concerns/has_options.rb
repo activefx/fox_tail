@@ -3,8 +3,6 @@
 module FoxTail::Concerns::HasOptions
   extend ActiveSupport::Concern
 
-  RESERVED_OPTIONS = [FoxTail::Theme::BASE_KEY.to_s].freeze
-
   def options
     @options ||= self.class.default_options
   end
@@ -17,6 +15,8 @@ module FoxTail::Concerns::HasOptions
 
   included do
     class_attribute :registered_options, instance_writer: false, instance_predicate: false
+    class_attribute :reserved_options, instance_accessor: false, instance_predicate: false, default: []
+
     self.registered_options = {}
   end
 
@@ -26,7 +26,7 @@ module FoxTail::Concerns::HasOptions
     end
 
     def has_option(name, as: name, default: nil, type: nil)
-      raise FoxTail::ReservedOption.new(self, as) if RESERVED_OPTIONS.include?(as.to_s)
+      raise FoxTail::ReservedOption.new(self, as) if reserved_options.include?(as.to_s)
 
       self.registered_options = registered_options.merge name => { name: name, as: as, default: default, type: type }
 

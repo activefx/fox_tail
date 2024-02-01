@@ -10,16 +10,13 @@ class FoxTail::CollapsibleTriggerComponent < FoxTail::TriggerBaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.classname("root.base"),
-                                         open? && theme.classname("root.expanded"),
-                                         !open? && theme.classname("root.collapsed"),
-                                         html_class
+    html_attributes[:class] = merge_theme_css [:root, :"root/#{ open? ? :expanded : :collapsed}"], append: html_class
   end
 
   def stimulus_controller_options
     super.merge open: open?,
-                collapsed_classes: theme.classname("root.collapsed"),
-                expanded_classes: theme.classname("root.expanded")
+                collapsed_classes: theme_css(:"root/collapsed"),
+                expanded_classes: theme_css(:"root/expanded")
   end
 
   class StimulusController < FoxTail::StimulusController

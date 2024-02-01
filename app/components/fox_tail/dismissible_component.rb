@@ -10,7 +10,7 @@ class FoxTail::DismissibleComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css append: html_class
   end
 
   def call
@@ -22,8 +22,8 @@ class FoxTail::DismissibleComponent < FoxTail::BaseComponent
       remove: remove?,
       auto_close: auto_close?,
       delay: delay,
-      dismissing_classes: theme.apply("root/dismissing", self),
-      dismissed_classes: theme.apply("root/dismissed", self)
+      dismissing_classes: theme_css(:"root/dismissing"),
+      dismissed_classes: theme_css(:"root/dismissed")
     }
   end
 

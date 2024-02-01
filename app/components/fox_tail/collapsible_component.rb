@@ -6,7 +6,7 @@ class FoxTail::CollapsibleComponent < FoxTail::BaseComponent
   attr_reader :id
 
   renders_one :trigger, lambda { |attributes = {}|
-    FoxTail::CollapsibleTriggerComponent.new trigger_id, "##{id}", attributes.merge(open: open?)
+    FoxTail::CollapsibleTriggerComponent.new trigger_id, "##{id}", attributes.merge(open: open?, theme: theme)
   }
 
   has_option :open, default: false, type: :boolean
@@ -25,9 +25,7 @@ class FoxTail::CollapsibleComponent < FoxTail::BaseComponent
     super
 
     html_attributes[:id] = id
-    html_attributes[:class] = classnames theme.apply(:root, self),
-                                         !open? && theme.apply("root/collapsed", self),
-                                         html_class
+    html_attributes[:class] = merge_theme_css [:root, !open? && "root/collapsed"], append: html_class
   end
 
   def call
@@ -40,7 +38,7 @@ class FoxTail::CollapsibleComponent < FoxTail::BaseComponent
   def stimulus_controller_options
     {
       open: open?,
-      hidden_classes: theme.apply("root/collapsed", self)
+      hidden_classes: theme_css("root/collapsed")
     }
   end
 

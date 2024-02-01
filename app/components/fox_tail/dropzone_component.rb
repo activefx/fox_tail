@@ -4,12 +4,13 @@ class FoxTail::DropzoneComponent < FoxTail::BaseComponent
   DEFAULT_ICON = "cloud-arrow-up"
 
   renders_one :icon, lambda { |icon, attributes = {}|
-    attributes[:class] = classnames theme.apply(:icon, self), attributes[:class]
+    attributes[:class] = theme_css :icon, append: attributes[:class]
+    attributes[:theme] = theme
     FoxTail::IconBaseComponent.new icon, attributes
   }
 
   renders_one :title, lambda { |text_or_attributes, attributes = {}, &block|
-    attributes[:class] = classnames theme.apply(:title, self), attributes[:class]
+    attributes[:class] = theme_css :title, append: attributes[:class]
 
     if block
       attributes = text_or_attributes
@@ -20,7 +21,7 @@ class FoxTail::DropzoneComponent < FoxTail::BaseComponent
   }
 
   renders_one :helper_text, lambda { |text, attributes = {}|
-    attributes[:class] = classnames theme.apply(:helper_text, self), attributes[:class]
+    attributes[:class] = theme_css :helper_text, append: attributes[:class]
     content_tag :p, text, attributes
   }
 
@@ -30,7 +31,7 @@ class FoxTail::DropzoneComponent < FoxTail::BaseComponent
     with_icon DEFAULT_ICON, variant: :outline unless icon?
     with_title I18n.t("components.fox_tail.dropzone.title_html").html_safe unless title?
     html_attributes[:type] = :file
-    html_attributes[:class] = theme.apply(:root, self)
+    html_attributes[:class] = theme_css
   end
 
   private

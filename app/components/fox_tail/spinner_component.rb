@@ -2,7 +2,7 @@
 
 class FoxTail::SpinnerComponent < FoxTail::InlineSvgComponent
   has_option :color, default: :default
-  has_option :size, default: :base
+  has_option :size, default: :normal
 
   def initialize(html_attributes = {})
     path = html_attributes.delete(:path) { self.class.spinner_path }
@@ -17,7 +17,7 @@ class FoxTail::SpinnerComponent < FoxTail::InlineSvgComponent
   end
 
   def html_class
-    classnames theme.apply(:root, self), super
+    theme_css append: super
   end
 
   class << self

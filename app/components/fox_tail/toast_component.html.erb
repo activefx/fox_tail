@@ -1,10 +1,10 @@
 <%= content_tag :div, html_attributes do %>
   <% if header? %>
-    <%= content_tag :div, class: theme.apply("container/header", self) do %>
+    <%= content_tag :div, class: theme_css("container/header") do %>
       <%= visual if visual? %>
       <%= header %>
       <% if action? || dismiss_icon? %>
-        <%= content_tag :div, class: theme.apply("container/actions", self) do %>
+        <%= content_tag :div, class: theme_css("container/actions") do %>
           <%= action if action?%>
           <%= dismiss_icon if dismiss_icon? %>
         <% end %>
@@ -12,11 +12,11 @@
     <% end %>
     <%= content %>
   <% else %>
-    <%= content_tag :div, class: theme.apply("container/header", self) do %>
+    <%= content_tag :div, class: theme_css("container/header") do %>
       <%= visual if visual? %>
-      <%= content_tag :div, content, class: theme.apply("container/content", self) %>
+      <%= content_tag :div, content, class: theme_css("container/content") %>
       <% if action? || dismiss_icon? %>
-        <%= content_tag :div, class: theme.apply("container/actions", self) do %>
+        <%= content_tag :div, class: theme_css("container/actions") do %>
           <%= action if action?%>
           <%= dismiss_icon if dismiss_icon? %>
         <% end %>

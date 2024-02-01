@@ -6,6 +6,7 @@ class FoxTail::TooltipComponent < FoxTail::BaseComponent
   attr_reader :id
 
   renders_one :trigger, lambda { |attributes = {}|
+    attributes[:theme] = theme
     FoxTail::TooltipTriggerComponent.new trigger_id, "##{id}", attributes
   }
 
@@ -31,7 +32,7 @@ class FoxTail::TooltipComponent < FoxTail::BaseComponent
 
     html_attributes[:id] = id
     html_attributes[:role] ||= :tooltip
-    html_attributes[:class] = classnames theme.apply(:root, self), theme.apply("root/hidden", self), html_class
+    html_attributes[:class] = merge_theme_css %i[root root/hidden], append: html_class
   end
 
   def call
@@ -48,8 +49,8 @@ class FoxTail::TooltipComponent < FoxTail::BaseComponent
       offset: offset,
       shift: shift,
       inline: inline?,
-      visible_classes: theme.apply("root/visible", self),
-      hidden_classes: theme.apply("root/hidden", self)
+      visible_classes: theme_css("root/visible"),
+      hidden_classes: theme_css("root/hidden")
     }
   end
 
@@ -63,7 +64,7 @@ class FoxTail::TooltipComponent < FoxTail::BaseComponent
   end
 
   def render_arrow
-    content_tag :div, nil, class: theme.apply(:arrow, self)
+    content_tag :div, nil, class: theme_css(:arrow)
   end
 
   class StimulusController < FoxTail::StimulusController

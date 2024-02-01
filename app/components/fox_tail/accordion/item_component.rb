@@ -6,22 +6,23 @@ class FoxTail::Accordion::ItemComponent < FoxTail::BaseComponent
   renders_one :icon, types: {
     icon: {
       renders: lambda { |icon, options = {}|
-        options[:class] = classnames theme.classname("icon.base"), options[:class]
+        options[:class] = theme_css :icon, append: options[:class]
         options[:variant] ||= :mini
+        options[:theme] = theme
         FoxTail::IconBaseComponent.new icon, options
       },
       as: :icon
     },
     svg: {
       renders: lambda { |path, attributes = {}|
-        attributes[:class] = classnames theme.classname("icon.base"), attributes[:class]
+        attributes[:class] = theme_css :icon, append: attributes[:class]
         FoxTail::InlineSvgComponent.new path, attributes
       },
       as: :svg_icon
     },
     image: {
       renders: lambda { |path, attributes = {}|
-        attributes[:class] = classnames theme.classname("icon.base"), attributes[:class]
+        attributes[:class] = theme_css :icon, append: attributes[:class]
         image_tag path, attributes
       },
       as: :image_icon
@@ -32,16 +33,18 @@ class FoxTail::Accordion::ItemComponent < FoxTail::BaseComponent
   renders_one :arrow, types: {
     icon: {
       renders: lambda { |options = {}|
-        icon_options = options.extract!(:icon, :rotate).reverse_merge(icon: :chevron_down, rotate: true)
-        options[:class] = classnames theme.apply(:arrow, icon_options), options[:class]
-        FoxTail::IconBaseComponent.new icon_options[:icon], options
+        icon = options.delete(:icon) || :chevron_down
+        icon_options = options.extract!(:rotate).reverse_merge(rotate: true)
+        options[:class] = theme_css :arrow, attributes: icon_options, append: options[:class]
+        options[:theme] = theme
+        FoxTail::IconBaseComponent.new icon, options
       },
       as: :arrow
     },
     svg: {
       renders: lambda { |path, options = {}|
         svg_options = options.extract!(:rotate).reverse_merge(rotate: true)
-        options[:class] = classnames theme.apply(:arrow, svg_options), options[:class]
+        options[:class] = theme_css :arrow, attributes: svg_options, append: options[:class]
         FoxTail::InlineSvgComponent.new path, options
       },
       as: :svg_arrow
@@ -49,7 +52,7 @@ class FoxTail::Accordion::ItemComponent < FoxTail::BaseComponent
     image: {
       renders: lambda { |path, options = {}|
         img_options = options.extract!(:rotate).reverse_merge(rotate: true)
-        options[:class] = classnames theme.apply(:arrow, img_options), options[:class]
+        options[:class] = theme_css :arrow, attributes: img_options, append: options[:class]
         image_tag path, options
       },
       as: :image_arrow
@@ -78,7 +81,7 @@ class FoxTail::Accordion::ItemComponent < FoxTail::BaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   def call
@@ -91,16 +94,24 @@ class FoxTail::Accordion::ItemComponent < FoxTail::BaseComponent
   private
 
   def body_classes
-    theme.apply :body, self
+    theme_css :body
   end
 
   def header_classes
-    theme.apply :header, self
+    theme_css :header
   end
 
   def render_header
+    trigger_component = FoxTail::CollapsibleTriggerComponent.new(
+      trigger_id,
+      "##{body_id}",
+      open: open?,
+      class: header_classes,
+      theme: theme
+    )
+
     content_tag header_tag, id: id do
-      render(FoxTail::CollapsibleTriggerComponent.new(trigger_id, "##{body_id}", open: open?, class: header_classes)) do |trigger|
+      render(trigger_component) do |trigger|
         content_tag :button, trigger.html_attributes do
           concat icon if icon?
           concat content_tag(:span, title)
@@ -111,12 +122,15 @@ class FoxTail::Accordion::ItemComponent < FoxTail::BaseComponent
   end
 
   def render_body
-    render(FoxTail::CollapsibleComponent.new(
+    collapsible_component = FoxTail::CollapsibleComponent.new(
       body_id,
       open: open?,
       data: { FoxTail::AccordionComponent.stimulus_controller.target_key => :collapsible },
-      aria: { labelledby: id }
-    )) do
+      aria: { labelledby: id },
+      theme: theme
+    )
+
+    render collapsible_component do
       content_tag :div, content, class: body_classes
     end
   end

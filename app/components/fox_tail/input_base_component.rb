@@ -4,7 +4,7 @@ class FoxTail::InputBaseComponent < FoxTail::BaseComponent
   include FoxTail::Concerns::Formable
   include FoxTail::Concerns::Placeholderable
 
-  has_option :size, default: :base
+  has_option :size, default: :normal
   has_option :state
 
   def initialize(*)

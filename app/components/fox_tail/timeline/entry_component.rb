@@ -6,10 +6,8 @@ class FoxTail::Timeline::EntryComponent < FoxTail::BaseComponent
       as: :dot_indicator,
       renders: lambda { |options = {}|
         options[:color] ||= :neutral
-        options[:class] = classnames theme.apply(:visual, self),
-                                     theme.apply("visual/dot", self),
-                                     options[:class]
-
+        options[:class] = merge_theme_css %i[visual visual/dot], append: options[:class]
+        options[:theme] = theme
         FoxTail::DotIndicatorComponent.new options
       }
     },
@@ -33,11 +31,8 @@ class FoxTail::Timeline::EntryComponent < FoxTail::BaseComponent
     image: {
       as: :image,
       renders: lambda { |source, options = {}|
-        container_classes = classnames theme.apply(:visual, self),
-                                       theme.apply("visual/container", self),
-                                       options.delete(:class)
-
-        options[:class] = theme.apply("visual/image", self)
+        container_classes = merge_theme_css %i[visual visual/container], append: options.delete(:class)
+        options[:class] = theme_css "visual/image"
 
         content_tag :span, class: container_classes do
           image_tag source, options
@@ -56,7 +51,7 @@ class FoxTail::Timeline::EntryComponent < FoxTail::BaseComponent
     super
 
     with_dot_indicator unless visual?
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
   end
 
   private
@@ -64,12 +59,9 @@ class FoxTail::Timeline::EntryComponent < FoxTail::BaseComponent
   def render_icon(options, &block)
     display_options = options.extract! :color
     display_options[:color] ||= :default
-
-    container_classes = classnames theme.apply(:visual, self, display_options),
-                                   theme.apply("visual/container", self, display_options),
-                                   options.delete(:class)
-
-    options[:class] = theme.apply("visual/icon", self, display_options)
+    container_classes = merge_theme_css %i[visual visual/container], append: options.delete(:class)
+    options[:class] = theme_css "visual/icon", attributes: display_options
+    options[:theme] = theme
 
     content_tag :span, class: container_classes do
       block.call options, display_options

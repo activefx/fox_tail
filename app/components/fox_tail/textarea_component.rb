@@ -6,7 +6,7 @@ class FoxTail::TextareaComponent < FoxTail::InputBaseComponent
   def before_render
     super
 
-    html_attributes[:class] = classnames theme.apply(:root, self), html_class
+    html_attributes[:class] = theme_css :root, append: html_class
     AutoResizeStimulusController.new.merge! html_attributes if use_stimulus? && autoresize?
   end
 

@@ -6,8 +6,8 @@ class PaginationComponentPreview < ViewComponent::Preview
 
   # @param page number
   # @param total number
-  # @param size select { choices: [sm,base] }
-  def playground(page: 6, total: 20, size: :base)
+  # @param size select { choices: [sm,normal] }
+  def playground(page: 6, total: 20, size: :normal)
     render FoxTail::PaginationComponent.new(page.to_i, total.to_i, size: size)
   end
 
@@ -17,9 +17,9 @@ class PaginationComponentPreview < ViewComponent::Preview
     render FoxTail::PaginationComponent.new(page.to_i, 20, size: :sm)
   end
 
-  # @label Base (Default)
-  def base(page: 6)
-    render FoxTail::PaginationComponent.new(page.to_i, 20, size: :base)
+  # @label Normal (Default)
+  def normal(page: 6)
+    render FoxTail::PaginationComponent.new(page.to_i, 20, size: :normal)
   end
 
   # @!endgroup
