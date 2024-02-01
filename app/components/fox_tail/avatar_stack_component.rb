@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::AvatarStackComponent < FoxTail::BaseComponent
+class FoxTail::AvatarStackComponent < FoxTail::Base
   renders_many :avatars, lambda { |options = {}|
     options[:size] = size
     options[:rounded] = rounded

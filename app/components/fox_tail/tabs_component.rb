@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::TabsComponent < FoxTail::BaseComponent
+class FoxTail::TabsComponent < FoxTail::Base
   has_option :variant, default: :default
   has_option :controlled, type: :boolean, default: false
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Table::HeaderComponent < FoxTail::BaseComponent
+class FoxTail::Table::HeaderComponent < FoxTail::Base
   renders_many :columns, lambda { |options = {}|
     options = options.merge self.options
     options[:theme] = theme

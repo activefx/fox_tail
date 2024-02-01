@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Table::ColumnComponent < FoxTail::BaseComponent
+class FoxTail::Table::ColumnComponent < FoxTail::Base
   has_option :tag, default: :td
   has_option :highlight, default: :none
   has_option :hover, type: :boolean, default: false

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::TableComponent < FoxTail::BaseComponent
+class FoxTail::TableComponent < FoxTail::Base
   renders_one :caption, lambda { |content_or_options = {}, options = {}, &block|
     if content_or_options.is_a? Hash
       options = content_or_options

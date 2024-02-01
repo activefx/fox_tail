@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::InputErrorListComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::Formable
+class FoxTail::InputErrorListComponent < FoxTail::Base
+  include FoxTail::Formable
 
   has_option :aliases
 

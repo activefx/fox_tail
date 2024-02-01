@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::RadioButtonComponent < FoxTail::BaseComponent
+class FoxTail::RadioButtonComponent < FoxTail::Base
   has_option :color, default: :default
   has_option :size, default: :normal
 

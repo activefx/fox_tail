@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::InputGroupComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::Formable
+class FoxTail::InputGroupComponent < FoxTail::Base
+  include FoxTail::Formable
 
   has_option :size, default: :normal
 

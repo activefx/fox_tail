@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Select::OptionGroupComponent < FoxTail::BaseComponent
+class FoxTail::Select::OptionGroupComponent < FoxTail::Base
   attr_reader :label
 
   renders_many :group_options, lambda { |value, options = {}|

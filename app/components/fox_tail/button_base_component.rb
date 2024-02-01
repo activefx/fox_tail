@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FoxTail::ButtonBaseComponent < FoxTail::ClickableComponent
-  include FoxTail::Concerns::Formable
+  include FoxTail::Formable
 
   renders_one :indicator, types: {
     dot: {

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::ButtonGroupComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::Formable
+class FoxTail::ButtonGroupComponent < FoxTail::Base
+  include FoxTail::Formable
 
   renders_many :buttons, types: {
     button: {

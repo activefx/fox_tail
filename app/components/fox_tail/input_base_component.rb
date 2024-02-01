@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class FoxTail::InputBaseComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::Formable
-  include FoxTail::Concerns::Placeholderable
+class FoxTail::InputBaseComponent < FoxTail::Base
+  include FoxTail::Formable
+  include FoxTail::Placeholderable
 
   has_option :size, default: :normal
   has_option :state

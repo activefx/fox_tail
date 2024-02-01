@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::DotIndicatorComponent < FoxTail::BaseComponent
+class FoxTail::DotIndicatorComponent < FoxTail::Base
   has_option :color, default: :default
   has_option :animated, default: false, type: :boolean
   has_option :size, default: :normal

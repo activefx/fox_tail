@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::HelperTextComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::Formable
+class FoxTail::HelperTextComponent < FoxTail::Base
+  include FoxTail::Formable
 
   has_option :state
 

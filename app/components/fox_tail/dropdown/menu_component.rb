@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Dropdown::MenuComponent < FoxTail::BaseComponent
+class FoxTail::Dropdown::MenuComponent < FoxTail::Base
   renders_many :items, lambda { |options = {}|
     options[:theme] = theme
     FoxTail::Dropdown::MenuItemComponent.new options

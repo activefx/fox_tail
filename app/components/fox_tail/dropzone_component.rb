@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::DropzoneComponent < FoxTail::BaseComponent
+class FoxTail::DropzoneComponent < FoxTail::Base
   DEFAULT_ICON = "cloud-arrow-up"
 
   renders_one :icon, lambda { |icon, attributes = {}|

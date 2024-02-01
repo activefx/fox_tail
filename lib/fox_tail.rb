@@ -9,9 +9,18 @@ module FoxTail
   extend ActiveSupport::Autoload
 
   autoload :Config
-  autoload :Base
   autoload :Translator
   autoload :StimulusController
+
+  # Concerns
+  autoload :Configurable
+  autoload :Controllable
+  autoload :Formable
+  autoload :Placeholderable
+  autoload :Themable
+
+  autoload :Base
+
 
   def self.root
     Pathname.new File.expand_path("..", __dir__)

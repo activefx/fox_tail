@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::SurfaceComponent < FoxTail::BaseComponent
+class FoxTail::SurfaceComponent < FoxTail::Base
   has_option :border, type: :boolean, default: true
   has_option :tag_name, default: :div
   has_option :hover, type: :boolean, default: false

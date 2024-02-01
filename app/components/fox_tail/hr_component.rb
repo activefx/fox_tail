@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::HrComponent < FoxTail::BaseComponent
+class FoxTail::HrComponent < FoxTail::Base
 
   has_option :size, default: :normal
   has_option :shape, default: :none

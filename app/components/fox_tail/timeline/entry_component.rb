@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Timeline::EntryComponent < FoxTail::BaseComponent
+class FoxTail::Timeline::EntryComponent < FoxTail::Base
   renders_one :visual, types: {
     dot: {
       as: :dot_indicator,

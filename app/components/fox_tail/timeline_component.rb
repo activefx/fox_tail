@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::TimelineComponent < FoxTail::BaseComponent
+class FoxTail::TimelineComponent < FoxTail::Base
   renders_many :entries, lambda { |options = {}|
     options[:vertical] = vertical?
     options[:theme] = theme

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::PopoverComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::PopoverComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   attr_reader :id
 

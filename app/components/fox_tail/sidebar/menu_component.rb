@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Sidebar::MenuComponent < FoxTail::BaseComponent
+class FoxTail::Sidebar::MenuComponent < FoxTail::Base
   renders_many :items, lambda { |options = {}|
     options[:level] = level
     options[:theme] = theme

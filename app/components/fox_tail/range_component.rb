@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::RangeComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::Formable
+class FoxTail::RangeComponent < FoxTail::Base
+  include FoxTail::Formable
 
   has_option :disabled, type: :boolean, default: false
   has_option :size, default: :normal

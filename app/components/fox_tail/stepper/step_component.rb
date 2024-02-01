@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Stepper::StepComponent < FoxTail::BaseComponent
+class FoxTail::Stepper::StepComponent < FoxTail::Base
   DEFAULT_COMPLETED_ICON = "check"
   DEFAULT_VERTICAL_CURRENT_ICON = "arrow-right"
 

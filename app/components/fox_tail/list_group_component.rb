@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::ListGroupComponent < FoxTail::BaseComponent
+class FoxTail::ListGroupComponent < FoxTail::Base
   renders_many :items, lambda { |options = {}|
     options[:flush] = flush?
     options[:theme] = theme

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::ToggleComponent < FoxTail::BaseComponent
+class FoxTail::ToggleComponent < FoxTail::Base
   has_option :size, default: :normal
   has_option :color, default: :default
 

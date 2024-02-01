@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::LabelComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::Formable
+class FoxTail::LabelComponent < FoxTail::Base
+  include FoxTail::Formable
 
   has_option :state
   has_option :required, type: :boolean, default: false

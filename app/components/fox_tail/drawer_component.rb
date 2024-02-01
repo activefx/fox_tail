@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::DrawerComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::DrawerComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   renders_one :close_button, types: {
     icon: {

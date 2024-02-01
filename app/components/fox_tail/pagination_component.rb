@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::PaginationComponent < FoxTail::BaseComponent
+class FoxTail::PaginationComponent < FoxTail::Base
   attr_reader :url, :current_page, :total_pages
 
   renders_one :first_button, lambda { |options = {}|

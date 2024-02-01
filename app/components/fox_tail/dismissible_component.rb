@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::DismissibleComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::DismissibleComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   has_option :remove, default: false, type: :boolean
   has_option :auto_close, default: false, type: :boolean

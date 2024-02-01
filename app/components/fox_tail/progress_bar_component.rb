@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::ProgressBarComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::ProgressBarComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   attr_reader :value
 

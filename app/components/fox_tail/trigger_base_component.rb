@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::TriggerBaseComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::TriggerBaseComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   attr_reader :id, :selector, :block
 

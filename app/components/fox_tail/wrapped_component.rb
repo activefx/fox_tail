@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::WrappedComponent < FoxTail::BaseComponent
+class FoxTail::WrappedComponent < FoxTail::Base
   attr_reader :block
 
   def initialize(html_attributes = {}, &block)

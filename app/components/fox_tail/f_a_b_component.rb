@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::FABComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::FABComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   renders_many :items, lambda { |icon_or_options = {}, options = {}|
     if icon_or_options.is_a?(Hash)

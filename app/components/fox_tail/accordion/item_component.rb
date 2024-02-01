@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Accordion::ItemComponent < FoxTail::BaseComponent
+class FoxTail::Accordion::ItemComponent < FoxTail::Base
   attr_reader :id, :title
 
   renders_one :icon, types: {

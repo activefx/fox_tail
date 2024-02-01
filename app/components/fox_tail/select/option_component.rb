@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::Select::OptionComponent < FoxTail::BaseComponent
+class FoxTail::Select::OptionComponent < FoxTail::Base
   attr_reader :value
 
   has_option :selected, type: :boolean, default: false

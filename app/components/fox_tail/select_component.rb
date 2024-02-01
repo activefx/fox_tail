@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FoxTail::SelectComponent < FoxTail::InputBaseComponent
-  include FoxTail::Concerns::Placeholderable
+  include FoxTail::Placeholderable
 
   has_option :disabled, type: :boolean, default: false
   has_option :value

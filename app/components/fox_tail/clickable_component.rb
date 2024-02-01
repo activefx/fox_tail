@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::ClickableComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::ClickableComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   has_option :url
   has_option :disabled, default: false, type: :boolean

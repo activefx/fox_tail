@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class FoxTail::CarouselComponent < FoxTail::BaseComponent
-  include FoxTail::Concerns::HasStimulusController
+class FoxTail::CarouselComponent < FoxTail::Base
+  include FoxTail::Controllable
 
   renders_many :slides, lambda { |options = {}, &block|
     options[:class] = merge_theme_css %i[slide slide/hidden], append: options[:class]

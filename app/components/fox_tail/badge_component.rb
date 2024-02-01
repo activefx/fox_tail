@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::BadgeComponent < FoxTail::BaseComponent
+class FoxTail::BadgeComponent < FoxTail::Base
   renders_one :icon, lambda { |icon, options = {}|
     options[:variant] ||= :mini
     options[:"aria-hidden"] = true

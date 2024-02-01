@@ -2,7 +2,7 @@
 
 ##
 # Displays an SVG file inline
-class FoxTail::InlineSvgComponent < FoxTail::BaseComponent
+class FoxTail::InlineSvgComponent < FoxTail::Base
   attr_reader :path
 
   has_option :raise, as: :raise_error, type: :boolean

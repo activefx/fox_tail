@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::AvatarComponent < FoxTail::BaseComponent
+class FoxTail::AvatarComponent < FoxTail::Base
   renders_one :dot, lambda { |options = {}|
     dot_options = options.extract!(:position).reverse_merge(position: :top_right)
     options[:class] = theme_css :dot, attributes: dot_options, append: options[:class]

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::CheckboxComponent < FoxTail::BaseComponent
+class FoxTail::CheckboxComponent < FoxTail::Base
   has_option :color, default: :default
   has_option :size, default: :normal
   has_option :unchecked_value, default: "0"

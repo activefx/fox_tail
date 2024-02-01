@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FoxTail::StepperComponent < FoxTail::BaseComponent
+class FoxTail::StepperComponent < FoxTail::Base
   renders_many :steps, lambda { |options = {}|
     options[:variant] = variant
     options[:theme] = theme
