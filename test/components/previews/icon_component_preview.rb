@@ -8,7 +8,7 @@ class IconComponentPreview < ViewComponent::Preview
   # See [heroicons.com](https://heroicons.com/) for a full list of available icons
   #
   # @param icon "The Heroicon name"
-  # @param variant select { choices: [solid,outline,mini] } "The type of icon"
+  # @param variant select { choices: [solid,outline,mini,micro] } "The type of icon"
   # @param size select { choices: [xs,sm,normal,lg,xl] } "The size of the icon"
   # @param color "The theme color of the icon"
   def playground(icon: "shield-check", variant: :solid, size: :normal, color: :default)
@@ -104,6 +104,15 @@ class IconComponentPreview < ViewComponent::Preview
   #
   # Useful for smaller elements like buttons, form elements, and to support text.
   def mini
+    render(FoxTail::IconComponent.new("shield-check", variant: :mini))
+  end
+
+  # Micro Icon
+  # ---------------
+  # *16x16, Solid fill*
+  #
+  # Useful for smaller elements like buttons, form elements, and to support text.
+  def micro
     render(FoxTail::IconComponent.new("shield-check", variant: :mini))
   end
 
